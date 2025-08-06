@@ -155,7 +155,7 @@ iOS Examples:
 ````
 
 
-🏗️ Abstract Factory
+# 🏗️ Abstract Factory
  **Abstract Factory** is a creational design pattern that lets you produce families of related objects without specifying their concrete classes. It provides an interface for creating a group of related products, ensuring that they work well together.
 
 
@@ -274,7 +274,9 @@ setupRoom(with: victorianFactory)
 
 Purpose: Create families of related objects
 iOS Examples:
+```swift
 - UIFontDescriptor with different styles (e.g., .preferredFont(forTextStyle:))
 - NSCollectionLayoutSection in Compositional Layouts
 - UIViewControllerTransitioningDelegate for custom transitions
+````
   
