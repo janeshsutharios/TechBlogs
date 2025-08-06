@@ -7,6 +7,28 @@ A **Singleton** is a design pattern that ensures a class has only **one instance
 Swift’s `static let` ensures thread-safety and lazy initialization, making it ideal for singletons.
 
 ---
+## 🧩 Basic Implementation
+
+```swift
+final class MySingleton {
+    static let shared = MySingleton()
+    
+    private init() {
+        // Prevent external initialization
+    }
+
+    func doSomething() {
+        print("Doing something...")
+    }
+}
+// Usage:
+MySingleton.shared.doSomething()
+
+````
+🔐 Why Use `private init()?`
+To prevent accidental instantiation from other parts of the code:
+Use final to prevent subclassing	Avoid overusing singletons
+
 iOS Examples:
 
 ```swift
@@ -44,28 +66,6 @@ class CoreDataStack: ObservableObject {
     private init() { }
 }
 ````
-
-## 🧩 Basic Implementation
-
-```swift
-final class MySingleton {
-    static let shared = MySingleton()
-    
-    private init() {
-        // Prevent external initialization
-    }
-
-    func doSomething() {
-        print("Doing something...")
-    }
-}
-// Usage:
-MySingleton.shared.doSomething()
-
-````
-🔐 Why Use private init()?
-To prevent accidental instantiation from other parts of the code:
-Use final to prevent subclassing	Avoid overusing singletons
 
 📚 Common Use Cases
 - App-wide logger
