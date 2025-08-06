@@ -73,3 +73,81 @@ class CoreDataStack: ObservableObject {
 - Core Data stack
 - User session manager
 - Theme/Appearance manager
+
+
+
+# 🏗️ Abstract Factory(Creational)
+ **Abstract Factory** is a creational design pattern that lets you produce families of related objects without specifying their concrete classes. It provides an interface for creating a group of related products, ensuring that they work well together.
+
+```swift
+// MARK: - Product
+protocol Coffee {
+    var name: String { get }
+    func prepare()
+}
+
+// MARK: - Concrete Products
+class Espresso: Coffee {
+    var name: String { "Espresso" }
+    
+    func prepare() {
+        print("Grinding fine coffee beans...")
+        print("Brewing \(name)... ☕️")
+    }
+}
+
+class Cappuccino: Coffee {
+    var name: String { "Cappuccino" }
+    
+    func prepare() {
+        print("Grinding coffee beans...")
+        print("Adding steamed milk...")
+        print("Brewing \(name)... ☕️")
+    }
+}
+
+// MARK: - Creator (Factory)
+protocol CoffeeMachine {
+    func createCoffee() -> Coffee
+    func serveCoffee()
+}
+
+extension CoffeeMachine {
+    func serveCoffee() {
+        let coffee = createCoffee()
+        print("Starting the machine...")
+        coffee.prepare()
+        print("Serving your \(coffee.name)! ✅")
+    }
+}
+
+// MARK: - Concrete Creators
+class EspressoMachine: CoffeeMachine {
+    func createCoffee() -> Coffee {
+        return Espresso()
+    }
+}
+
+class CappuccinoMachine: CoffeeMachine {
+    func createCoffee() -> Coffee {
+        return Cappuccino()
+    }
+}
+
+// MARK: - Usage
+let espressoMachine = EspressoMachine()
+espressoMachine.serveCoffee()
+
+print("\n---\n")
+
+let cappuccinoMachine = CappuccinoMachine()
+cappuccinoMachine.serveCoffee()
+````
+
+Purpose: Delegate object creation to subclasses
+iOS Examples:
+```swift
+- UIFont.systemFont(ofSize:) vs UIFont.boldSystemFont(ofSize:)
+- UIButton(type: .system) (Creates different button types)
+- NSNumber(value:) (Creates number objects for different types)
+````
