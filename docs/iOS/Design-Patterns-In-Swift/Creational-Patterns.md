@@ -145,6 +145,7 @@ cappuccinoMachine.serveCoffee()
 ````
 
 Purpose: Delegate object creation to subclasses
+
 iOS Examples:
 ```swift
 - UIFont.systemFont(ofSize:) vs UIFont.boldSystemFont(ofSize:)
