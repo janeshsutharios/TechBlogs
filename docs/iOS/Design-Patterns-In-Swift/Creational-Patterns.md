@@ -279,4 +279,12 @@ iOS Examples:
 - NSCollectionLayoutSection in Compositional Layouts
 - UIViewControllerTransitioningDelegate for custom transitions
 ````
-  
+
+| Feature           | Factory Method                         | Abstract Factory                                 |
+| ----------------- | -------------------------------------- | ------------------------------------------------ |
+| **Purpose**       | Create one product                     | Create **families** of related products          |
+| **Product Count** | One type of product                    | Multiple related products                        |
+| **Inheritance**   | Relies on subclass to override factory | Uses composition to create families              |
+| **Flexibility**   | Less flexible                          | More flexible, decouples product families        |
+| **Example**       | Create `PushNotification`              | Create UI kits: Button + Label for iOS and macOS |
+
