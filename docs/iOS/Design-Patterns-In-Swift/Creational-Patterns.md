@@ -76,8 +76,9 @@ class CoreDataStack: ObservableObject {
 
 
 
-# 🏗️ Abstract Factory(Creational)
- **Abstract Factory** is a creational design pattern that lets you produce families of related objects without specifying their concrete classes. It provides an interface for creating a group of related products, ensuring that they work well together.
+# 🏭 Factory Method(Creational)
+It provides a way to delegate the instantiation of objects to subclasses.
+Instead of calling a constructor directly, the client calls a method that returns an instance of a product, allowing the code to remain flexible and loosely coupled.
 
 ```swift
 // MARK: - Product
@@ -152,3 +153,128 @@ iOS Examples:
 - UIButton(type: .system) (Creates different button types)
 - NSNumber(value:) (Creates number objects for different types)
 ````
+
+
+🏗️ Abstract Factory
+ **Abstract Factory** is a creational design pattern that lets you produce families of related objects without specifying their concrete classes. It provides an interface for creating a group of related products, ensuring that they work well together.
+
+
+```swift
+// MARK: - Abstract Product Protocols
+
+protocol Chair {
+    func sitOn()
+}
+
+protocol Sofa {
+    func lieOn()
+}
+
+protocol Table {
+    func placeItems()
+}
+
+// MARK: - Concrete Product Implementations
+
+// Victorian
+class VictorianChair: Chair {
+    func sitOn() {
+        print("Sitting on a Victorian Chair")
+    }
+}
+
+class VictorianSofa: Sofa {
+    func lieOn() {
+        print("Lying on a Victorian Sofa")
+    }
+}
+
+class VictorianTable: Table {
+    func placeItems() {
+        print("Items placed on a Victorian Table")
+    }
+}
+
+// Modern
+class ModernChair: Chair {
+    func sitOn() {
+        print("Sitting on a Modern Chair")
+    }
+}
+
+class ModernSofa: Sofa {
+    func lieOn() {
+        print("Lying on a Modern Sofa")
+    }
+}
+
+class ModernTable: Table {
+    func placeItems() {
+        print("Items placed on a Modern Table")
+    }
+}
+
+// MARK: - Abstract Factory
+
+protocol FurnitureFactory {
+    func createChair() -> Chair
+    func createSofa() -> Sofa
+    func createTable() -> Table
+}
+
+// MARK: - Concrete Factories
+
+class VictorianFurnitureFactory: FurnitureFactory {
+    func createChair() -> Chair {
+        VictorianChair()
+    }
+
+    func createSofa() -> Sofa {
+        VictorianSofa()
+    }
+
+    func createTable() -> Table {
+        VictorianTable()
+    }
+}
+
+class ModernFurnitureFactory: FurnitureFactory {
+    func createChair() -> Chair {
+        ModernChair()
+    }
+
+    func createSofa() -> Sofa {
+        ModernSofa()
+    }
+
+    func createTable() -> Table {
+        ModernTable()
+    }
+}
+
+// MARK: - Client Code
+
+func setupRoom(with factory: FurnitureFactory) {
+    let chair = factory.createChair()
+    let sofa = factory.createSofa()
+    let table = factory.createTable()
+
+    chair.sitOn()
+    sofa.lieOn()
+    table.placeItems()
+}
+
+// Usage
+let modernFactory = ModernFurnitureFactory()
+setupRoom(with: modernFactory)
+
+let victorianFactory = VictorianFurnitureFactory()
+setupRoom(with: victorianFactory)
+````
+
+Purpose: Create families of related objects
+iOS Examples:
+- UIFontDescriptor with different styles (e.g., .preferredFont(forTextStyle:))
+- NSCollectionLayoutSection in Compositional Layouts
+- UIViewControllerTransitioningDelegate for custom transitions
+  
