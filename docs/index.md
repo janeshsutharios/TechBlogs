@@ -2,4 +2,4 @@
 
 Welcome! Browse my articles:
 
-- [Design Patterns in Swift](/docs/iOS/Design-Patterns-In-Swift.md)
+- [🧠 Design Patterns in Swift (Read)](https://janeshsutharios.github.io/TechBlogs/iOS/Design-Patterns-In-Swift)
