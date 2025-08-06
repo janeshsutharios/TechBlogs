@@ -1,4 +1,4 @@
-# 1💍 Singleton
+# 💍 Singleton(Creational)
 Purpose: Ensure a class has only one instance with global access
 # ✅ Singleton in Swift
 
@@ -9,13 +9,15 @@ Swift’s `static let` ensures thread-safety and lazy initialization, making it 
 ---
 iOS Examples:
 
-```swift - UIApplication.shared 
+```swift
+- UIApplication.shared 
 - FileManager.default
 - UserDefaults.standard
 - URLSession.shared
 - NotificationCenter.default
 ````
-Example 
+
+Example #
 Reference [Apple](https://developer.apple.com/documentation/coredata/setting-up-a-core-data-stack)
 ```swift
 // Define an observable class to encapsulate all Core Data-related functionality.
