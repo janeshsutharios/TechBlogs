@@ -288,3 +288,10 @@ iOS Examples:
 | **Flexibility**   | Less flexible                          | More flexible, decouples product families        |
 | **Example**       | Create `PushNotification`              | Create UI kits: Button + Label for iOS and macOS |
 
+🧱 Real-World Analogy
+Factory Method:
+Think of a Coffee Machine that can make either an Espresso or a Cappuccino, depending on how it's subclassed.
+
+Abstract Factory:
+Think of a Furniture Set Factory. It produces a chair, a sofa, and a table — all of the same style (e.g., Victorian or Modern).
+
