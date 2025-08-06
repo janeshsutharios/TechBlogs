@@ -1,4 +1,3 @@
-// Coming soon.
 # 📘 Tech Blogs by Janesh
 
 Welcome! Browse my articles:
