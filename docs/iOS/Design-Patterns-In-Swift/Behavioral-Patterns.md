@@ -462,3 +462,182 @@ Key Benefits in iOS Development
 - You need different ways to traverse the same collection
 - You want to hide your collection's implementation details
 - You're working with tree/graph structures
+
+/*
+# 📡 Mediator (Behavioral): 
+The Mediator pattern centralizes complex communication between related objects, making them communicate through a single mediator instead of directly. This reduces tight coupling and simplifies maintenance, especially useful in UI frameworks like chat apps or Stock trading app
+
+Example: Stock Trading Platform
+## Overview
+Implements a stock exchange where:
+- Buyers/Sellers communicate only through the Exchange (mediator)
+- The Exchange handles order matching and trade execution
+- Traders remain completely decoupled
+
+## Components
+1. `StockExchangeMediator` - Protocol
+2. `NYStockExchange` - Concrete mediator
+3. `Trader` - Abstract colleague
+4. `BuyOrder`/`SellOrder` - Command objects
+*/
+
+import Foundation
+
+// MARK: - Mediator Protocol
+protocol StockExchangeMediator {
+    func submitBuyOrder(_ order: BuyOrder)
+    func submitSellOrder(_ order: SellOrder)
+    func registerTrader(_ trader: Trader)
+}
+
+// MARK: - Concrete Mediator
+final class NYStockExchange: StockExchangeMediator {
+    private var traders = [String: Trader]()
+    private var buyOrders = [BuyOrder]()
+    private var sellOrders = [SellOrder]()
+    
+    func registerTrader(_ trader: Trader) {
+        traders[trader.id] = trader
+        print("ℹ️ Registered trader: \(trader.name)")
+    }
+    
+    func submitBuyOrder(_ order: BuyOrder) {
+        buyOrders.append(order)
+        print("📈 Buy order submitted: \(order.quantity) x \(order.stock) @ \(order.price)")
+        tryMatchTrades()
+    }
+    
+    func submitSellOrder(_ order: SellOrder) {
+        sellOrders.append(order)
+        print("📉 Sell order submitted: \(order.quantity) x \(order.stock) @ \(order.price)")
+        tryMatchTrades()
+    }
+    
+    private func tryMatchTrades() {
+        for (i, buyOrder) in buyOrders.enumerated() {
+            for (j, sellOrder) in sellOrders.enumerated() 
+            where buyOrder.stock == sellOrder.stock 
+               && buyOrder.price >= sellOrder.price {
+                
+                let tradePrice = (buyOrder.price + sellOrder.price) / 2
+                let quantity = min(buyOrder.quantity, sellOrder.quantity)
+                
+                print("""
+                🟢 TRADE EXECUTED:
+                   \(quantity) shares of \(buyOrder.stock) @ \(tradePrice)
+                   Buyer: \(buyOrder.traderName)
+                   Seller: \(sellOrder.traderName)
+                """)
+                
+                // Update order quantities
+                buyOrders[i].quantity -= quantity
+                sellOrders[j].quantity -= quantity
+                
+                // Cleanup filled orders
+                if buyOrders[i].quantity == 0 { buyOrders.remove(at: i) }
+                if sellOrders[j].quantity == 0 { sellOrders.remove(at: j) }
+                
+                return
+            }
+        }
+    }
+}
+
+// MARK: - Colleagues
+class Trader {
+    let id: String
+    let name: String
+    let mediator: StockExchangeMediator
+    
+    init(id: String, name: String, mediator: StockExchangeMediator) {
+        self.id = id
+        self.name = name
+        self.mediator = mediator
+        mediator.registerTrader(self)
+    }
+}
+
+struct BuyOrder {
+    let traderId: String
+    let traderName: String
+    let stock: String
+    var quantity: Int
+    let price: Double
+}
+
+struct SellOrder {
+    let traderId: String
+    let traderName: String
+    let stock: String
+    var quantity: Int
+    let price: Double
+}
+
+// MARK: - Concrete Traders
+final class InstitutionalTrader: Trader {
+    func placeBuyOrder(stock: String, quantity: Int, price: Double) {
+        let order = BuyOrder(
+            traderId: self.id,
+            traderName: self.name,
+            stock: stock,
+            quantity: quantity,
+            price: price
+        )
+        mediator.submitBuyOrder(order)
+    }
+}
+
+final class RetailTrader: Trader {
+    func placeSellOrder(stock: String, quantity: Int, price: Double) {
+        let order = SellOrder(
+            traderId: self.id,
+            traderName: self.name,
+            stock: stock,
+            quantity: quantity,
+            price: price
+        )
+        mediator.submitSellOrder(order)
+    }
+}
+
+// MARK: - Usage Example
+func demonstrateStockExchange() {
+    print("\n=== STOCK EXCHANGE DEMO ===")
+    
+    let nyse = NYStockExchange()
+    
+    let hedgeFund = InstitutionalTrader(
+        id: "HF-123", 
+        name: "Quantum Capital", 
+        mediator: nyse
+    )
+    
+    let retailInvestor = RetailTrader(
+        id: "R-456", 
+        name: "Jane Doe", 
+        mediator: nyse
+    )
+    
+    // Place orders
+    hedgeFund.placeBuyOrder(stock: "AAPL", quantity: 1000, price: 175.50)
+    retailInvestor.placeSellOrder(stock: "AAPL", quantity: 500, price: 175.25)
+    
+    // Place another sell order (won't fully match)
+    retailInvestor.placeSellOrder(stock: "AAPL", quantity: 800, price: 176.00)
+}
+
+// Run the demo
+demonstrateStockExchange()
+
+/* Expected Output:
+=== STOCK EXCHANGE DEMO ===
+ℹ️ Registered trader: Quantum Capital
+ℹ️ Registered trader: Jane Doe
+📈 Buy order submitted: 1000 x AAPL @ 175.5
+📉 Sell order submitted: 500 x AAPL @ 175.25
+🟢 TRADE EXECUTED:
+   500 shares of AAPL @ 175.375
+   Buyer: Quantum Capital
+   Seller: Jane Doe
+📉 Sell order submitted: 800 x AAPL @ 176.0
+*/
