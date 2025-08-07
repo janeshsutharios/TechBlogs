@@ -232,12 +232,11 @@ The Interpreter Pattern is used to define a grammar for a language and provide a
 ## Real-World Example: Smart Home Automation Language
 Imagine creating a simple language to control smart home devices:
 
-TURN ON LIGHT "Kitchen"
-SET THERMOSTAT TO 72
-IF TIME > "18:00" THEN TURN ON "Living Room Lights"
+1. TURN ON LIGHT "Kitchen"
+2. SET THERMOSTAT TO 72
+3. IF TIME > "18:00" THEN TURN ON "Living Room Lights"
 
 1. Define the Grammar
-
 Our mini-language has:
 
     Commands: TURN ON/OFF, SET
@@ -246,9 +245,6 @@ Our mini-language has:
 
     Conditions: IF...THEN
 
-2. Swift Implementation
-
-(Single-file interpreter for smart home commands)
 ```swift
 // MARK: - Context (Stores variables/state)
 class Context {
@@ -352,5 +348,7 @@ print(interpreter.interpret(command: "IF TIME > \"18:00\" THEN TURN ON \"Living 
 Key Benefits
 
 ✅ Extensible Grammar: Easily add new commands (e.g., LOCK DOOR).
+
 ✅ Decouples Parsing from Execution: Change interpretation logic without modifying expressions.
+
 ✅ Great for Rule-Based Systems: E.g., pricing engines ("IF customer IS premium THEN APPLY 10% DISCOUNT").
