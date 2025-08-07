@@ -1110,8 +1110,8 @@ nav.navigate(from: "Home", to: "Work")
 
 Sure! Here's the complete explanation of the **📝 Template Method** pattern wrapped in GitHub-friendly **Markdown** format for direct use in your `README.md`:
 
-````markdown
-## 📝 Template Method (Behavioral)
+
+# 📝 Template Method (Behavioral)
 
 The **Template Method** pattern defines the *skeleton* of an algorithm in a base class, while allowing subclasses to redefine specific steps without changing the algorithm's overall structure.
 
@@ -1195,4 +1195,98 @@ Apple calls the template lifecycle internally, but gives you hooks to override c
 
 > ✅ Helps maintain algorithm consistency while offering flexibility for customization.
 
+Sure! Here's the enhanced `👣 Visitor (Behavioral)` section with **usage example** added — fully formatted in **Markdown** for a `README.md`.
+
+---
+
+## 👣 Visitor (Behavioral)
+
+The **Visitor** pattern allows you to add new operations to a group of objects without changing their classes. Instead of adding logic to the objects, you create a separate visitor that implements the operation.
+
+---
+
+### ✅ When to Use
+
+- You want to **add new behaviors** to a structure of objects **without modifying** the objects.
+- You have a **class hierarchy** and need to perform operations across multiple types **in a uniform way**.
+- The object structure is **stable**, but new operations are added frequently.
+
+---
+
+### 💡 Real-World Example
+
+#### 📄 Document Exporter
+
+```swift
+protocol Document {
+    func accept(visitor: DocumentVisitor)
+}
+
+class PDFDocument: Document {
+    func accept(visitor: DocumentVisitor) {
+        visitor.visit(pdf: self)
+    }
+}
+
+class WordDocument: Document {
+    func accept(visitor: DocumentVisitor) {
+        visitor.visit(word: self)
+    }
+}
+
+protocol DocumentVisitor {
+    func visit(pdf: PDFDocument)
+    func visit(word: WordDocument)
+}
+
+class PrintVisitor: DocumentVisitor {
+    func visit(pdf: PDFDocument) {
+        print("🖨️ Printing PDF Document")
+    }
+
+    func visit(word: WordDocument) {
+        print("🖨️ Printing Word Document")
+    }
+}
+````
+
+#### 🧪 Usage:
+
+```swift
+let documents: [Document] = [PDFDocument(), WordDocument()]
+let printer = PrintVisitor()
+
+for doc in documents {
+    doc.accept(visitor: printer)
+}
+```
+
+---
+
+### 🍎 iOS Built-in Usage
+
+While iOS doesn't explicitly use the Visitor pattern, similar behavior can be seen in:
+
+* **File system traversal** using `FileManager.delegate` for performing actions on files/folders.
+* **Core Animation** (`CALayer`, `CATextLayer`, `CAShapeLayer`) — traversing view layers and applying logic.
+* **UIKit Accessibility** API or Responder Chain — where different UI elements are "visited" and acted upon based on type.
+
+---
+
+### 🧩 Summary
+
+| Role              | Description                                       |
+| ----------------- | ------------------------------------------------- |
+| `Visitor`         | Declares `visit()` methods for each concrete type |
+| `Element`         | Has an `accept(visitor:)` method                  |
+| `ConcreteVisitor` | Implements actions to be taken on each element    |
+
+> ✅ The Visitor pattern promotes **open/closed principle** by letting you add new operations without modifying existing classes.
+
+---
+
+```
+
+Would you like the same format for `👀 Observer` or another behavioral pattern next?
+```
 
