@@ -1,8 +1,8 @@
 # ⛓️ Chain Of Responsibility(Behavioral)
-## Expense Approval System (Chain of Responsibility Pattern)
+Decouples request senders from receivers by allowing multiple handlers to process a request sequentially. Each handler decides to act or pass it down the chain.
 
+## Example - Expense Approval System 
 A Swift implementation of the **Chain of Responsibility** behavioral design pattern for handling multi-level expense approvals in a corporate workflow.
-
 Define Expenses -> Build the Chain -> Submit for Approval
 ## Features
 - **Dynamic Chain**: Approvers (Manager → Director → CFO) forward requests they can't handle.
