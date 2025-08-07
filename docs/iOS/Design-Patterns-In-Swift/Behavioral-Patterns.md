@@ -222,7 +222,6 @@ orderManager.undoLast()
 ````
 
 # 📜 Interpreter (Behavioral)
-
 The Interpreter Pattern is used to define a grammar for a language and provide an interpreter to evaluate expressions in that language. It's useful for:
 
 - Domain-Specific Languages (DSLs) (e.g., SQL, regex)
