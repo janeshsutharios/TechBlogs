@@ -449,9 +449,10 @@ let config2 = AppConfiguration()
 print(config2.environment) // .staging
 print(config2.isFeatureEnabled("NewOnboarding")) // true
 ````
-# 🧬 Prototype Pattern (Creational)
+# 🖨️ Prototype Pattern (Creational)
 
 ## Context:
+Purpose: Clone objects instead of creating new ones
 In a scalable iOS app (like a design tool or a visual editor), users can create reusable "design elements" (buttons, cards, labels, etc.) and duplicate them easily. Each duplicated item should be an independent copy (not just a reference), preserving the current state but allowing customization afterward.
 
 This is where the Prototype pattern shines.
@@ -549,3 +550,106 @@ Like duplicating slides in Keynote or Figma components — you want the same bas
 ## 📱 Example Extension: Component Library
 
 You can extend this system with a registry of default components and use `.clone()` to offer base templates to users in a design editor.
+
+---
+## iOS Examples
+---
+
+## ✅ 1. UICollectionViewCell — `dequeueReusableCell`
+
+```swift
+class ProductCell: UICollectionViewCell {
+    static let reuseIdentifier = "ProductCell"
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        contentView.backgroundColor = .lightGray
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func configure(with product: String) {
+        // Set up the cell's data
+    }
+}
+
+class ProductViewController: UICollectionViewController {
+    let products = ["iPhone", "iPad", "MacBook"]
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        collectionView.register(ProductCell.self, forCellWithReuseIdentifier: ProductCell.reuseIdentifier)
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return products.count
+    }
+
+    override func collectionView(_ collectionView: UICollectionView,
+                                 cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.reuseIdentifier, for: indexPath) as! ProductCell
+        cell.configure(with: products[indexPath.item])
+        return cell
+    }
+}
+```
+
+> Reuses prototype instances — iOS keeps a pool of cells and clones them with new configurations.
+
+---
+
+## ✅ 2. UIView Copying via `NSCopying`
+
+```swift
+class CustomLabel: UILabel, NSCopying {
+    var customStyle: String = ""
+
+    func copy(with zone: NSZone? = nil) -> Any {
+        let copy = CustomLabel()
+        copy.text = self.text
+        copy.textColor = self.textColor
+        copy.customStyle = self.customStyle
+        return copy
+    }
+}
+
+// Usage
+let original = CustomLabel()
+original.text = "Original"
+original.textColor = .blue
+original.customStyle = "Header"
+
+let cloned = original.copy() as! CustomLabel
+cloned.text = "Cloned"
+```
+
+> Allows you to duplicate view configurations — true **Prototype** behavior.
+
+---
+
+## ✅ 3. Codable — Decoding JSON Templates
+
+```swift
+struct User: Codable {
+    var name: String
+    var age: Int
+}
+
+// JSON Data
+let jsonData = """
+[
+    {"name": "Alice", "age": 30},
+    {"name": "Bob", "age": 24}
+]
+""".data(using: .utf8)!
+
+do {
+    let users = try JSONDecoder().decode([User].self, from: jsonData)
+    users.forEach { print($0.name, $0.age) }
+} catch {
+    print("Decoding failed: \(error)")
+}
+````
+
