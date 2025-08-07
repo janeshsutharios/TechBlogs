@@ -382,3 +382,70 @@ if let request = request {
     }.resume()
 }
 ````
+
+# ♾️ Monostate(Creational)
+Shared State Pattern: All instances of a class share the same internal state (static variables), making them behave like a singleton.
+Bonus: Unlike Singleton (one instance), Monostate allows multiple "fake" instances with shared data. 🎭
+| Feature       | Singleton           | Monostate                           |
+| ------------- | ------------------- | ----------------------------------- |
+| Instantiation | One only (`shared`) | Many, but share state               |
+| Global Access | Yes                 | No (needs passing around instances) |
+| Testability   | Harder              | Easier                              |
+| Subclassing   | Restrictive         | Flexible                            |
+
+```swift
+final class AppConfiguration: Sendable {
+    private static let lock = NSLock()
+    private static var _environment: Environment = .production
+    private static var _featureToggles: [String: Bool] = [:]
+    
+    var environment: Environment {
+        get {
+            Self.lock.lock()
+            defer { Self.lock.unlock() }
+            return Self._environment
+        }
+        set {
+            Self.lock.lock()
+            defer { Self.lock.unlock() }
+            Self._environment = newValue
+        }
+    }
+    
+    var featureToggles: [String: Bool] {
+        get {
+            Self.lock.lock()
+            defer { Self.lock.unlock() }
+            return Self._featureToggles
+        }
+        set {
+            Self.lock.lock()
+            defer { Self.lock.unlock() }
+            Self._featureToggles = newValue
+        }
+    }
+    
+    func isFeatureEnabled(_ key: String) -> Bool {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        return Self._featureToggles[key] ?? false
+    }
+    
+    func setFeature(_ key: String, enabled: Bool) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        Self._featureToggles[key] = enabled
+    }
+}
+
+enum Environment: Sendable {
+    case staging, production
+}
+let config1 = AppConfiguration()
+config1.environment = .staging
+config1.setFeature("NewOnboarding", enabled: true)
+
+let config2 = AppConfiguration()
+print(config2.environment) // .staging
+print(config2.isFeatureEnabled("NewOnboarding")) // true
+````
