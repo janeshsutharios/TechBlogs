@@ -1,10 +1,10 @@
 # ⛓️ Chain Of Responsibility(Behavioral)
 Decouples request senders from receivers by allowing multiple handlers to process a request sequentially. Each handler decides to act or pass it down the chain.
 
-## Example - Expense Approval System 
+**Example - Expense Approval System** 
 A Swift implementation of the **Chain of Responsibility** behavioral design pattern for handling multi-level expense approvals in a corporate workflow.
 Define Expenses -> Build the Chain -> Submit for Approval
-## Features
+**Features**
 - **Dynamic Chain**: Approvers (Manager → Director → CFO) forward requests they can't handle.
 - **Scalable**: Add new approvers (e.g., `VP`) without changing existing code.
 - **Clear Policies**: Each handler enforces its own business rules.
@@ -228,7 +228,7 @@ The Interpreter Pattern is used to define a grammar for a language and provide a
 - Rule engines (e.g., business rules, pricing rules)
 - Mathematical expressions (e.g., calculators)
   
-## Real-World Example: Smart Home Automation Language
+**Real-World Example: Smart Home Automation Language**
 Imagine creating a simple language to control smart home devices:
 
 1. TURN ON LIGHT "Kitchen"
@@ -463,24 +463,24 @@ Key Benefits in iOS Development
 - You want to hide your collection's implementation details
 - You're working with tree/graph structures
 
-/*
+
 # 📡 Mediator (Behavioral): 
 The Mediator pattern centralizes complex communication between related objects, making them communicate through a single mediator instead of directly. This reduces tight coupling and simplifies maintenance, especially useful in UI frameworks like chat apps or Stock trading app
 
 Example: Stock Trading Platform
-## Overview
+**Overview**
 Implements a stock exchange where:
 - Buyers/Sellers communicate only through the Exchange (mediator)
 - The Exchange handles order matching and trade execution
 - Traders remain completely decoupled
 
-## Components
+**Components**
 1. `StockExchangeMediator` - Protocol
 2. `NYStockExchange` - Concrete mediator
 3. `Trader` - Abstract colleague
 4. `BuyOrder`/`SellOrder` - Command objects
-*/
 
+```swift
 import Foundation
 
 // MARK: - Mediator Protocol
@@ -641,3 +641,4 @@ demonstrateStockExchange()
    Seller: Jane Doe
 📉 Sell order submitted: 800 x AAPL @ 176.0
 */
+````
