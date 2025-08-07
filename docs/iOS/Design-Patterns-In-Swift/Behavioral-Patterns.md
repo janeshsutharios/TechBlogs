@@ -454,4 +454,11 @@ while let file = files?.nextObject() as? String {
         print(value) // Implicit iterator
     }
 ````    
-    
+Key Benefits in iOS Development
+- Uniform Access: Traverse arrays, dictionaries, trees, and custom collections the same way
+- Algorithm Separation: Keep traversal logic separate from business logic
+**When to Use**
+- Your collection has complex traversal logic
+- You need different ways to traverse the same collection
+- You want to hide your collection's implementation details
+- You're working with tree/graph structures
