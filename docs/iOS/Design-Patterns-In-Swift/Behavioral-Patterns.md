@@ -1014,4 +1014,98 @@ Each of these internal states modifies what actions are allowed (e.g., can't pau
 | Media        | `AVPlayer`                   | ✅ State      |
 
 ---
+# 🎯 Strategy (Behavioral)
+## 🎯 Strategy Pattern (Behavioral)
+
+The **Strategy Pattern** is used to define a family of algorithms, encapsulate each one, and make them interchangeable. It allows the algorithm to vary independently from clients that use it.
+
+---
+
+### ✅ Real-World Analogy
+
+Imagine a **Navigation App** (like Google Maps or Apple Maps). You can choose how you want to reach your destination:
+
+- 🚗 **Fastest Route**
+- 🚦 **Least Traffic**
+- 🚌 **Public Transport**
+- 🚶 **Walking**
+
+Each of these is a *strategy* for navigation. The app lets you switch strategies at runtime without rewriting the logic of the app itself.
+
+---
+
+### 💻 Swift Example
+
+```swift
+// MARK: - Strategy Protocol
+protocol RouteStrategy {
+    func buildRoute(from: String, to: String)
+}
+
+// MARK: - Concrete Strategies
+struct FastestRoute: RouteStrategy {
+    func buildRoute(from: String, to: String) {
+        print("🚗 Fastest route from \(from) to \(to)")
+    }
+}
+
+struct LeastTrafficRoute: RouteStrategy {
+    func buildRoute(from: String, to: String) {
+        print("🚙 Least traffic route from \(from) to \(to)")
+    }
+}
+
+struct PublicTransportRoute: RouteStrategy {
+    func buildRoute(from: String, to: String) {
+        print("🚌 Public transport route from \(from) to \(to)")
+    }
+}
+
+// MARK: - Context
+class NavigationContext {
+    private var strategy: RouteStrategy
+
+    init(strategy: RouteStrategy) {
+        self.strategy = strategy
+    }
+
+    func updateStrategy(_ strategy: RouteStrategy) {
+        self.strategy = strategy
+    }
+
+    func navigate(from: String, to: String) {
+        strategy.buildRoute(from: from, to: to)
+    }
+}
+```
+
+---
+
+### 🧪 Usage
+
+```swift
+let nav = NavigationContext(strategy: FastestRoute())
+nav.navigate(from: "Home", to: "Work")
+
+nav.updateStrategy(LeastTrafficRoute())
+nav.navigate(from: "Home", to: "Work")
+
+nav.updateStrategy(PublicTransportRoute())
+nav.navigate(from: "Home", to: "Work")
+```
+
+---
+
+### 📦 Benefits
+
+- Promotes **Open/Closed Principle** — add new strategies without modifying existing code.
+- Helps separate concerns — algorithm logic is decoupled from usage.
+- Easily testable and extendable.
+
+---
+
+### 📱 Where It's Used in iOS
+
+- `UICollectionView` / `UITableView` uses different *layout strategies* (`UICollectionViewFlowLayout`, `UICollectionViewCompositionalLayout`)
+- `UIViewControllerTransitioningDelegate` allows different transition *animation strategies*
 
