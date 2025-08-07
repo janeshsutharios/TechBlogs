@@ -862,3 +862,72 @@ This is the modern Swift (Combine) way to implement Observer pattern with:
     Type safety
 
     Built-in memory management
+
+# 🔄 State (Behavioral)
+
+The **State pattern** allows an object to alter its behavior when its internal state changes — it appears as if the object changed its class. It's useful when an object must change behavior at runtime depending on its current state.
+
+---
+
+**🚦 Real-World Example: Traffic Signal System**
+
+Imagine a traffic light system that cycles through:
+
+**🔴 Red → 🟢 Green → 🟡 Yellow → 🔴 Red**
+
+Each light represents a state, and each state knows what the next state is. Rather than using a massive `switch` statement, we encapsulate each light as its own state object.
+
+---
+
+### ✅ Benefits:
+- Avoids long `if-else` or `switch` logic.
+- Easy to modify or extend with new states.
+- Improves maintainability and testability.
+
+---
+
+### 🧑‍💻 Swift Code Example
+
+```swift
+protocol TrafficLightState {
+    func next(context: TrafficLightContext)
+    var color: String { get }
+}
+
+class RedLight: TrafficLightState {
+    var color: String { "🔴 Red" }
+
+    func next(context: TrafficLightContext) {
+        context.state = GreenLight()
+    }
+}
+
+class GreenLight: TrafficLightState {
+    var color: String { "🟢 Green" }
+
+    func next(context: TrafficLightContext) {
+        context.state = YellowLight()
+    }
+}
+
+class YellowLight: TrafficLightState {
+    var color: String { "🟡 Yellow" }
+
+    func next(context: TrafficLightContext) {
+        context.state = RedLight()
+    }
+}
+
+class TrafficLightContext {
+    var state: TrafficLightState
+
+    init(initialState: TrafficLightState) {
+        self.state = initialState
+    }
+
+    func changeLight() {
+        print("Current Light: \(state.color)")
+        state.next(context: self)
+    }
+}
+````
