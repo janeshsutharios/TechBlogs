@@ -81,3 +81,109 @@ iOS uses the Adapter pattern in many places:
 > 🔌 The Adapter pattern promotes **code reusability** by allowing legacy or third-party code to be reused in modern systems without modification.
 
 ---
+Here’s the **markdown version** of the 🌉 **Bridge Pattern** using the **Payment Gateway Integrations** example — perfect for your `README.md`:
+
+---
+
+# 🌉 Bridge (Structural)
+
+### 🧠 Intent
+
+The **Bridge Pattern** decouples an abstraction from its implementation so that the two can vary independently. It's especially useful when you have multiple dimensions of variation in your system.
+
+---
+
+### 💡 Real-World Example: **Payment Gateway Integrations**
+
+Suppose you're building an e-commerce app that needs to support:
+
+* Multiple **payment types** (One-time, Subscription, Refunds, etc.)
+* Multiple **payment gateways** (Stripe, PayPal, Razorpay)
+
+Hard-coding all combinations leads to a mess.
+With the Bridge pattern, we **separate the payment logic (abstraction)** from **gateway implementations**, keeping your system extensible and maintainable.
+
+---
+
+### 🧱 Structure
+
+```swift
+// MARK: - Implementation Interface
+protocol PaymentGateway {
+    func processPayment(amount: Double)
+}
+
+// MARK: - Concrete Implementations
+class StripeGateway: PaymentGateway {
+    func processPayment(amount: Double) {
+        print("Processing ₹\(amount) via Stripe.")
+    }
+}
+
+class PayPalGateway: PaymentGateway {
+    func processPayment(amount: Double) {
+        print("Processing ₹\(amount) via PayPal.")
+    }
+}
+
+// MARK: - Abstraction
+class Payment {
+    let gateway: PaymentGateway
+
+    init(gateway: PaymentGateway) {
+        self.gateway = gateway
+    }
+
+    func makePayment(amount: Double) {
+        gateway.processPayment(amount: amount)
+    }
+}
+
+// MARK: - Refined Abstractions
+class SubscriptionPayment: Payment {
+    override func makePayment(amount: Double) {
+        print("Handling subscription logic...")
+        super.makePayment(amount: amount)
+    }
+}
+
+class OneTimePayment: Payment {
+    override func makePayment(amount: Double) {
+        print("Handling one-time payment logic...")
+        super.makePayment(amount: amount)
+    }
+}
+```
+
+---
+
+### ✅ Usage
+
+```swift
+let stripe = StripeGateway()
+let paypal = PayPalGateway()
+
+let monthlySub = SubscriptionPayment(gateway: stripe)
+monthlySub.makePayment(amount: 999.0)
+
+// Output:
+// Handling subscription logic...
+// Processing ₹999.0 via Stripe.
+
+let oneTime = OneTimePayment(gateway: paypal)
+oneTime.makePayment(amount: 499.0)
+
+// Output:
+// Handling one-time payment logic...
+// Processing ₹499.0 via PayPal.
+```
+
+---
+
+### 🍎 iOS Usage Analogy
+
+* `UIView` uses a `CALayer` underneath → a form of **bridge** between visual abstraction and rendering engine.
+* `NSURLSession` is an abstraction that can delegate network behavior to different `URLProtocol` implementations.
+* In SwiftUI, `View` is protocol-based but rendering is handled separately by the system — another subtle bridge.
+
+---
