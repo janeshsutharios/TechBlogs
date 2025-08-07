@@ -449,3 +449,103 @@ let config2 = AppConfiguration()
 print(config2.environment) // .staging
 print(config2.isFeatureEnabled("NewOnboarding")) // true
 ````
+# 🧬 Prototype Pattern (Creational)
+
+## Context:
+In a scalable iOS app (like a design tool or a visual editor), users can create reusable "design elements" (buttons, cards, labels, etc.) and duplicate them easily. Each duplicated item should be an independent copy (not just a reference), preserving the current state but allowing customization afterward.
+
+This is where the Prototype pattern shines.
+
+---
+
+## ✅ When to Use:
+- You need to duplicate complex objects efficiently.
+- Object creation is costly (lots of setup/configuration).
+- You want to decouple instantiation from the object type.
+
+---
+
+## 🔧 Example: UI Component Prototyping System
+
+We’ll create a base `DesignComponent` protocol that requires `clone()`.
+
+### 1. Component Protocol
+
+```swift
+protocol DesignComponent: AnyObject {
+    func clone() -> DesignComponent
+}
+```
+
+---
+
+### 2. Concrete Components
+
+```swift
+final class ButtonComponent: DesignComponent {
+    var title: String
+    var backgroundColor: String
+    var cornerRadius: Double
+
+    init(title: String, backgroundColor: String, cornerRadius: Double) {
+        self.title = title
+        self.backgroundColor = backgroundColor
+        self.cornerRadius = cornerRadius
+    }
+
+    func clone() -> DesignComponent {
+        return ButtonComponent(title: self.title, backgroundColor: self.backgroundColor, cornerRadius: self.cornerRadius)
+    }
+}
+
+final class CardComponent: DesignComponent {
+    var heading: String
+    var bodyText: String
+    var imageURL: String
+
+    init(heading: String, bodyText: String, imageURL: String) {
+        self.heading = heading
+        self.bodyText = bodyText
+        self.imageURL = imageURL
+    }
+
+    func clone() -> DesignComponent {
+        return CardComponent(heading: self.heading, bodyText: self.bodyText, imageURL: self.imageURL)
+    }
+}
+```
+
+---
+
+### 3. Usage in the App (Cloning Components)
+
+```swift
+let originalButton = ButtonComponent(title: "Submit", backgroundColor: "#FF5733", cornerRadius: 8.0)
+let clonedButton = originalButton.clone() as! ButtonComponent
+
+clonedButton.title = "Cancel" // Independent copy
+```
+
+---
+
+## 💡 Benefits:
+- Allows runtime duplication without knowing the exact class.
+- Helps isolate state between cloned instances.
+- Makes UI building tools and design systems very flexible.
+
+---
+
+## 📦 Real-world Analogy:
+Like duplicating slides in Keynote or Figma components — you want the same base, but modifiable independently.
+
+---
+
+## 🧠 Related Concepts in iOS:
+- `NSCopying` protocol is a native equivalent of the Prototype pattern.
+- Used in copy-on-write implementations like `Array`, `String`, `Data` (for performance).
+
+---
+
+## 📱 Example Extension: Component Library
+
+You can extend this system with a registry of default components and use `.clone()` to offer base templates to users in a design editor.
