@@ -220,3 +220,137 @@ orderManager.processCommands()
 orderManager.undoLast() 
 // Output: 🚫 Cancelled: Pizza
 ````
+
+# 📜 Interpreter (Behavioral)
+
+The Interpreter Pattern is used to define a grammar for a language and provide an interpreter to evaluate expressions in that language. It's useful for:
+
+- Domain-Specific Languages (DSLs) (e.g., SQL, regex)
+- Rule engines (e.g., business rules, pricing rules)
+- Mathematical expressions (e.g., calculators)
+  
+## Real-World Example: Smart Home Automation Language
+Imagine creating a simple language to control smart home devices:
+
+TURN ON LIGHT "Kitchen"
+SET THERMOSTAT TO 72
+IF TIME > "18:00" THEN TURN ON "Living Room Lights"
+
+1. Define the Grammar
+
+Our mini-language has:
+
+    Commands: TURN ON/OFF, SET
+
+    Targets: LIGHT, THERMOSTAT
+
+    Conditions: IF...THEN
+
+2. Swift Implementation
+
+(Single-file interpreter for smart home commands)
+```swift
+// MARK: - Context (Stores variables/state)
+class Context {
+    var variables: [String: Any] = [:]
+    var deviceStatus: [String: Bool] = [:]
+    var thermostatTemp: Int = 68
+}
+
+// MARK: - Abstract Expression
+protocol Expression {
+    func interpret(context: Context) -> String
+}
+
+// MARK: - Terminal Expressions (Primitive commands)
+final class TurnOnCommand: Expression {
+    private let device: String
+    
+    init(device: String) {
+        self.device = device
+    }
+    
+    func interpret(context: Context) -> String {
+        context.deviceStatus[device] = true
+        return "Turned ON \(device)"
+    }
+}
+
+final class SetThermostatCommand: Expression {
+    private let temp: Int
+    
+    init(temp: Int) {
+        self.temp = temp
+    }
+    
+    func interpret(context: Context) -> String {
+        context.thermostatTemp = temp
+        return "Thermostat set to \(temp)°F"
+    }
+}
+
+// MARK: - Non-Terminal Expression (Composite)
+final class IfThenExpression: Expression {
+    private let condition: () -> Bool
+    private let thenExpression: Expression
+    
+    init(condition: @escaping () -> Bool, thenExpression: Expression) {
+        self.condition = condition
+        self.thenExpression = thenExpression
+    }
+    
+    func interpret(context: Context) -> String {
+        if condition() {
+            return thenExpression.interpret(context: context)
+        }
+        return "Condition not met"
+    }
+}
+
+// MARK: - Client (Interprets the language)
+class HomeAutomationInterpreter {
+    private var context = Context()
+    
+    func interpret(command: String) -> String {
+        let parts = command.components(separatedBy: " ")
+        
+        if command.starts(with: "TURN ON") {
+            let device = parts[2].replacingOccurrences(of: "\"", with: "")
+            return TurnOnCommand(device: device).interpret(context: context)
+        }
+        else if command.starts(with: "SET THERMOSTAT") {
+            let temp = Int(parts[3])!
+            return SetThermostatCommand(temp: temp).interpret(context: context)
+        }
+        else if command.starts(with: "IF") {
+            // Example: "IF TIME > \"18:00\" THEN TURN ON \"Living Room\""
+            let condition = { return true } // Simplified for demo
+            let thenCommand = command.components(separatedBy: "THEN ")[1]
+            let thenExpression = interpret(command: thenCommand)
+            return IfThenExpression(
+                condition: condition,
+                thenExpression: TurnOnCommand(device: "Living Room Lights")
+            ).interpret(context: context)
+        }
+        
+        return "Unknown command"
+    }
+}
+
+// MARK: - Usage
+let interpreter = HomeAutomationInterpreter()
+
+print(interpreter.interpret(command: "TURN ON \"Kitchen Light\""))
+// Output: "Turned ON Kitchen Light"
+
+print(interpreter.interpret(command: "SET THERMOSTAT TO 72"))
+// Output: "Thermostat set to 72°F"
+
+print(interpreter.interpret(command: "IF TIME > \"18:00\" THEN TURN ON \"Living Room Lights\""))
+// Output: "Turned ON Living Room Lights" (if condition is true)
+````
+Key Benefits
+
+✅ Extensible Grammar: Easily add new commands (e.g., LOCK DOOR).
+✅ Decouples Parsing from Execution: Change interpretation logic without modifying expressions.
+✅ Great for Rule-Based Systems: E.g., pricing engines ("IF customer IS premium THEN APPLY 10% DISCOUNT").
