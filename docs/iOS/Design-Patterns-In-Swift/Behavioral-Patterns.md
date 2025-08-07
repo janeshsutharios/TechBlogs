@@ -1108,3 +1108,91 @@ nav.navigate(from: "Home", to: "Work")
 - `UICollectionView` / `UITableView` uses different *layout strategies* (`UICollectionViewFlowLayout`, `UICollectionViewCompositionalLayout`)
 - `UIViewControllerTransitioningDelegate` allows different transition *animation strategies*
 
+Sure! Here's the complete explanation of the **📝 Template Method** pattern wrapped in GitHub-friendly **Markdown** format for direct use in your `README.md`:
+
+````markdown
+## 📝 Template Method (Behavioral)
+
+The **Template Method** pattern defines the *skeleton* of an algorithm in a base class, while allowing subclasses to redefine specific steps without changing the algorithm's overall structure.
+
+This promotes **code reuse**, enforces **consistent workflows**, and allows flexibility in extending behavior where needed.
+
+---
+
+### ✅ When to Use
+
+- When multiple classes share the same algorithm structure but differ in specific steps.
+- When you want to avoid code duplication while allowing extensions.
+
+---
+
+### 🚀 Real-World Example
+
+#### 📦 Online Order Processing
+
+```swift
+class OrderProcessTemplate {
+    func processOrder() {
+        selectItems()
+        makePayment()
+        shipItems()
+        sendReceipt()
+    }
+
+    func selectItems() {
+        print("Items selected")
+    }
+
+    func makePayment() {
+        fatalError("Subclass must override makePayment()")
+    }
+
+    func shipItems() {
+        print("Items shipped")
+    }
+
+    func sendReceipt() {
+        print("Receipt sent")
+    }
+}
+
+class OnlineOrder: OrderProcessTemplate {
+    override func makePayment() {
+        print("Paid using UPI")
+    }
+}
+
+let order = OnlineOrder()
+order.processOrder()
+````
+
+---
+
+### 🍎 iOS Built-in Example
+
+UIKit uses the Template Method pattern extensively. For example:
+
+#### 🧱 `UITableView`
+
+Apple defines the *structure* of rendering a table, but developers customize *specific steps* via delegate methods:
+
+```swift
+func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+
+func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+```
+
+Apple calls the template lifecycle internally, but gives you hooks to override critical steps.
+
+---
+
+### 🧩 Summary
+
+| Role           | Description                                              |
+| -------------- | -------------------------------------------------------- |
+| Abstract Class | Defines the template method and default steps            |
+| Subclass       | Overrides one or more steps to provide specific behavior |
+
+> ✅ Helps maintain algorithm consistency while offering flexibility for customization.
+
+
