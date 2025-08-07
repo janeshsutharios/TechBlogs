@@ -803,3 +803,62 @@ demonstrateTextEditor()
 📝 [5] Hello
 */
 ````
+
+# 👀 Observer (Behavioral)
+
+Establishes a one-to-many dependency between objects so that when one object changes state, all its dependents are notified automatically.
+
+## Comparison with Similar Patterns
+
+| Pattern       | Relation Direction | Communication Style | Use Case Example |
+|--------------|--------------------|---------------------|------------------|
+| **Observer** | One-to-many (push) | Automatic broadcasts | Weather updates to multiple displays |
+| **Mediator** | Many-to-many       | Centralized routing  | Chat room message distribution |
+| **Delegate** | One-to-one         | Direct callbacks     | UITableView cell configuration |
+
+### Key Differences:
+- **Observer**: Subjects don't know their observers (`@Published` in SwiftUI)
+- **Mediator**: All communication goes through middleman (e.g., `UINavigationController`)
+- **Delegate**: Tightly coupled 1:1 relationship (`UITableViewDelegate`)
+```swift
+import Combine
+
+// Observable (Subject)
+class WeatherStation {
+    @Published var temperature: Double = 20.0 // Auto-publishes changes
+}
+
+// Observer
+let station = WeatherStation()
+var cancellable: AnyCancellable?
+
+// Subscribe to changes
+cancellable = station.$temperature
+    .sink { newTemp in
+        print("🌡️ Temperature now: \(newTemp)°C") 
+    }
+
+// Trigger change
+station.temperature = 25.0 // Observer prints automatically
+
+/* Output:
+🌡️ Temperature now: 25.0°C
+*/
+````
+Key Components:
+
+    @Published property - The observable subject
+
+    $ prefix access - Creates a publisher
+
+    .sink - The observer's subscription
+
+    AnyCancellable - Manages observation lifecycle
+
+This is the modern Swift (Combine) way to implement Observer pattern with:
+
+    Less boilerplate
+
+    Type safety
+
+    Built-in memory management
