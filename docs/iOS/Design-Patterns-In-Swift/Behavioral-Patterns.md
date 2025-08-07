@@ -351,3 +351,107 @@ Key Benefits
 ✅ Decouples Parsing from Execution: Change interpretation logic without modifying expressions.
 
 ✅ Great for Rule-Based Systems: E.g., pricing engines ("IF customer IS premium THEN APPLY 10% DISCOUNT").
+
+# 🔁 Iterator(Behavioral)
+
+The Iterator is a behavioral design pattern that provides a way to access elements of a collection sequentially without exposing its underlying representation. It's one of the most fundamental and frequently used patterns in iOS development.
+Core Concept
+
+Problem: You need to traverse different collections (arrays, trees, graphs) in a standardized way without coupling your code to their specific implementations.
+
+Solution: The Iterator pattern:
+
+ - Extracts the traversal behavior into a separate object
+
+ - Provides a common interface for accessing elements
+
+ - Keeps track of the current position
+
+iOS/Swift Implementation
+1. Native Swift Iterators
+
+Swift has built-in iterator support through two protocols:
+```swift
+protocol Sequence {
+    associatedtype Iterator: IteratorProtocol
+    func makeIterator() -> Iterator
+}
+
+protocol IteratorProtocol {
+    associatedtype Element
+    mutating func next() -> Element?
+}
+````
+**Example with Array:**
+```swift
+let foods = ["Pizza", "Sushi", "Burger"]
+var iterator = foods.makeIterator()
+
+while let item = iterator.next() {
+    print(item)
+}
+// Prints: Pizza, Sushi, Burger
+````
+2. Custom Iterator Example
+
+Let's create an iterator for your FoodApp that filters vegetarian items:
+```swift
+struct FoodItem {
+    let name: String
+    let isVegetarian: Bool
+    let price: Double
+}
+
+struct VegetarianIterator: IteratorProtocol {
+    private var iterator: IndexingIterator<[FoodItem]>
+    
+    init(items: [FoodItem]) {
+        self.iterator = items.makeIterator()
+    }
+    
+    mutating func next() -> FoodItem? {
+        while let item = iterator.next() {
+            if item.isVegetarian {
+                return item
+            }
+        }
+        return nil
+    }
+}
+
+// Usage:
+let menu = [
+    FoodItem(name: "Pizza", isVegetarian: true, price: 12.99),
+    FoodItem(name: "Steak", isVegetarian: false, price: 24.99),
+    FoodItem(name: "Salad", isVegetarian: true, price: 8.99)
+]
+
+var vegIterator = VegetarianIterator(items: menu)
+while let item = vegIterator.next() {
+    print("Vegetarian option: \(item.name)")
+}
+// Prints: Pizza, Salad
+````
+**Real-World iOS Examples**
+   
+```swift
+ // Core Data NSFetchedResultsController:
+let controller: NSFetchedResultsController<FoodItem> = ...
+for item in controller.fetchedObjects ?? [] {
+    // Iterates through managed objects
+}
+
+// File System Enumeration:
+let files = FileManager.default.enumerator(atPath: "/path")
+while let file = files?.nextObject() as? String {
+    print(file)
+}
+
+// Combine Publishers:
+[1, 2, 3]
+    .publisher
+    .sink { value in
+        print(value) // Implicit iterator
+    }
+````    
+    
