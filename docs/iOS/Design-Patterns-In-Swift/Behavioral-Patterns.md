@@ -642,3 +642,164 @@ demonstrateStockExchange()
 📉 Sell order submitted: 800 x AAPL @ 176.0
 */
 ````
+# 💾 Memento (Behavioral)
+*Captures and externalizes an object's state for later restoration without breaking encapsulation. Enables undo/redo functionality and snapshots.*  
+**Example:** *Text editor undo stack, game save points, or database transactions.*  
+
+iOS System Examples
+```swift
+let undoManager = UndoManager()
+undoManager.registerUndo(withTarget: self) { 
+    $0.restore(from: memento) 
+}
+
+// Core Data's Rollback
+context.rollback() // Reverts to last persisted state
+````
+
+# Let's understand with an example - Memento Pattern: State Snapshot System
+
+## Overview
+Captures and externalizes an object's state for later restoration while maintaining encapsulation.
+
+## Key Components
+1. `Originator` - The object that produces state snapshots
+2. `Memento` - Immutable state container  
+3. `Caretaker` - Manages memento history
+
+```swift
+import Foundation
+
+// MARK: - Originator (Text Editor)
+final class TextEditor {
+    private var text: String
+    private var cursorPosition: Int
+    
+    init(text: String = "") {
+        self.text = text
+        self.cursorPosition = text.count
+    }
+    
+    func type(_ char: Character) {
+        text.insert(char, at: text.index(text.startIndex, offsetBy: cursorPosition))
+        cursorPosition += 1
+        printState()
+    }
+    
+    func delete() {
+        guard cursorPosition > 0 else { return }
+        text.remove(at: text.index(text.startIndex, offsetBy: cursorPosition-1))
+        cursorPosition -= 1
+        printState()
+    }
+    
+    private func printState() {
+        print("📝 [\(cursorPosition)] \(text)")
+    }
+    
+    // MARK: Memento Creation
+    func save() -> EditorMemento {
+        return EditorMemento(
+            text: text,
+            cursor: cursorPosition,
+            date: Date()
+        )
+    }
+    
+    func restore(from memento: EditorMemento) {
+        self.text = memento.text
+        self.cursorPosition = memento.cursorPosition
+        print("⎌ Restored to \(memento.date.formatted()):")
+        printState()
+    }
+}
+
+// MARK: - Memento (State Snapshot)
+struct EditorMemento {
+    let text: String
+    let cursorPosition: Int
+    let date: Date
+    
+    fileprivate init(text: String, cursor: Int, date: Date) {
+        self.text = text
+        self.cursorPosition = cursor
+        self.date = date
+    }
+}
+
+// MARK: - Caretaker (Undo Manager)
+final class UndoHistory {
+    private var stack: [EditorMemento] = []
+    
+    func save(_ memento: EditorMemento) {
+        stack.append(memento)
+        print("💾 Saved state (\(stack.count) total)")
+    }
+    
+    func undo() -> EditorMemento? {
+        guard stack.count > 1 else { return nil }
+        _ = stack.popLast()
+        return stack.last
+    }
+    
+    func clear() {
+        stack.removeAll()
+    }
+}
+
+// MARK: - Usage Example
+func demonstrateTextEditor() {
+    let editor = TextEditor()
+    let history = UndoHistory()
+    
+    // Initial save
+    history.save(editor.save())
+    
+    // Edit document
+    "Hello".forEach { editor.type($0) }
+    history.save(editor.save())
+    
+    editor.type(" ")
+    editor.type("W")
+    editor.type("o")
+    editor.delete() // Deletes 'o'
+    editor.type("r")
+    history.save(editor.save())
+    
+    // Undo last 2 actions
+    print("\n--- Undo ---")
+    if let memento = history.undo() {
+        editor.restore(from: memento)
+    }
+    
+    // Undo again
+    if let memento = history.undo() {
+        editor.restore(from: memento)
+    }
+}
+
+// Run the demo
+demonstrateTextEditor()
+
+/* Expected Output:
+📝 [1] H
+📝 [2] He
+📝 [3] Hel
+📝 [4] Hell
+📝 [5] Hello
+💾 Saved state (2 total)
+📝 [6] Hello 
+📝 [7] Hello W
+📝 [8] Hello Wo
+📝 [7] Hello W
+📝 [8] Hello Wr
+💾 Saved state (3 total)
+
+--- Undo ---
+⎌ Restored to 6/9/24, 3:30 PM:
+📝 [6] Hello 
+
+⎌ Restored to 6/9/24, 3:30 PM:
+📝 [5] Hello
+*/
+````
