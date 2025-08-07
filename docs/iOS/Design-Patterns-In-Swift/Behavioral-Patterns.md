@@ -657,12 +657,12 @@ undoManager.registerUndo(withTarget: self) {
 context.rollback() // Reverts to last persisted state
 ````
 
-# Let's understand with an example - Memento Pattern: State Snapshot System
+**Let's understand with an example - Memento Pattern: State Snapshot System**
 
-## Overview
+**Overview**
 Captures and externalizes an object's state for later restoration while maintaining encapsulation.
 
-## Key Components
+**Key Components**
 1. `Originator` - The object that produces state snapshots
 2. `Memento` - Immutable state container  
 3. `Caretaker` - Manages memento history
