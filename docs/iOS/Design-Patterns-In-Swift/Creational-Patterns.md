@@ -556,7 +556,12 @@ You can extend this system with a registry of default components and use `.clone
 ---
 
 ## ✅ 1. UICollectionViewCell — `dequeueReusableCell`
+`UICollectionViewCell — dequeueReusableCell(withIdentifier:)`
+Concept: Instead of creating new cells from scratch each time, iOS reuses a "prototype cell" (often registered via a nib or class), and dequeues a copy of it for display.
 
+Why it's Prototype: The system maintains a pool of cells, and returns a copy-like reused cell instance — mimicking the Prototype pattern where new instances are created from existing ones.
+
+Note: It's not a literal `copy()` under the hood, but the concept of reusing object instances is inspired by the same goal of reducing object creation overhead.
 ```swift
 class ProductCell: UICollectionViewCell {
     static let reuseIdentifier = "ProductCell"
@@ -601,7 +606,12 @@ class ProductViewController: UICollectionViewController {
 ---
 
 ## ✅ 2. UIView Copying via `NSCopying`
+UIView.copy() via NSCopying
+Concept: Classes that conform to NSCopying allow creating clones of an instance using `copy()` or `mutableCopy()`.
 
+Why it's Prototype: This is a direct use of the Prototype pattern — duplicating an object via a defined copying method rather than instantiating a new one from scratch.
+
+Example: Custom views or models that implement `copy(with:)` method to make independent copies.
 ```swift
 class CustomLabel: UILabel, NSCopying {
     var customStyle: String = ""
@@ -630,6 +640,13 @@ cloned.text = "Cloned"
 ---
 
 ## ✅ 3. Codable — Decoding JSON Templates
+
+ Codable objects decoded from JSON
+Concept: When you decode a JSON payload into Swift objects, you're essentially cloning data into a model structure.
+
+Why it's similar to Prototype: You're not using an existing object to copy(), but the idea is close — you are replicating a known structure repeatedly from the same schema (like a prototype template).
+
+Caveat: Not a textbook Prototype, but shares the idea of repeated structured instantiation from a template-like format.
 
 ```swift
 struct User: Codable {
