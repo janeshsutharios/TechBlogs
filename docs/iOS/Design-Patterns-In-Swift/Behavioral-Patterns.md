@@ -1108,9 +1108,6 @@ nav.navigate(from: "Home", to: "Work")
 - `UICollectionView` / `UITableView` uses different *layout strategies* (`UICollectionViewFlowLayout`, `UICollectionViewCompositionalLayout`)
 - `UIViewControllerTransitioningDelegate` allows different transition *animation strategies*
 
-Sure! Here's the complete explanation of the **📝 Template Method** pattern wrapped in GitHub-friendly **Markdown** format for direct use in your `README.md`:
-
-
 # 📝 Template Method (Behavioral)
 
 The **Template Method** pattern defines the *skeleton* of an algorithm in a base class, while allowing subclasses to redefine specific steps without changing the algorithm's overall structure.
@@ -1284,9 +1281,4 @@ While iOS doesn't explicitly use the Visitor pattern, similar behavior can be se
 > ✅ The Visitor pattern promotes **open/closed principle** by letting you add new operations without modifying existing classes.
 
 ---
-
-```
-
-Would you like the same format for `👀 Observer` or another behavioral pattern next?
-```
 
