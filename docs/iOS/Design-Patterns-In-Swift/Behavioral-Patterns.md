@@ -1015,7 +1015,6 @@ Each of these internal states modifies what actions are allowed (e.g., can't pau
 
 ---
 # 🎯 Strategy (Behavioral)
-## 🎯 Strategy Pattern (Behavioral)
 
 The **Strategy Pattern** is used to define a family of algorithms, encapsulate each one, and make them interchangeable. It allows the algorithm to vary independently from clients that use it.
 
