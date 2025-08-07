@@ -931,3 +931,87 @@ class TrafficLightContext {
     }
 }
 ````
+**iOS and Apple frameworks internally use the State pattern**, especially in scenarios where **an object’s behavior changes based on its current state**. Below are real-world examples:
+
+---
+
+### ✅ 1. `URLSessionTask` State Management
+
+Each task (`dataTask`, `uploadTask`, etc.) has a `state`:
+
+```swift
+public enum URLSessionTask.State {
+    case running
+    case suspended
+    case canceling
+    case completed
+}
+```
+
+- The behavior of the task changes based on this state.
+- You cannot resume a completed task or cancel a suspended one — only allowed transitions are handled.
+
+🧠 **State Pattern:** Each state governs what next action is valid — mimicking the classic pattern.
+
+---
+
+### ✅ 2. `UIViewController` Lifecycle
+
+A `UIViewController` transitions through multiple internal states:
+
+- `viewDidLoad`
+- `viewWillAppear`
+- `viewDidAppear`
+- `viewWillDisappear`
+- `viewDidDisappear`
+
+Each of these corresponds to different internal "states" and determines what setup or teardown logic runs.
+
+🧠 **State Pattern:** The controller behaves differently depending on its current stage in the lifecycle.
+
+---
+
+### ✅ 3. `UIButton` States
+
+A `UIButton` can be in:
+
+- `.normal`
+- `.highlighted`
+- `.disabled`
+- `.selected`
+
+```swift
+button.setTitle("Submit", for: .normal)
+button.setTitle("Submitting...", for: .disabled)
+```
+
+Each state defines different behavior and visuals.
+
+🧠 **State Pattern:** UIButton modifies appearance and behavior based on state automatically — internal implementation leverages State-like behavior.
+
+---
+
+### ✅ 4. `AVPlayer`
+
+An `AVPlayer` can be:
+
+- Playing
+- Paused
+- Stopped
+- Buffering
+
+Each of these internal states modifies what actions are allowed (e.g., can't pause a stopped player).
+
+---
+
+### 📋 Summary
+
+| Area         | iOS API                     | Pattern Used |
+|--------------|-----------------------------|---------------|
+| Networking   | `URLSessionTask.State`       | ✅ State      |
+| UI Lifecycle | `UIViewController`           | ✅ State      |
+| UI Controls  | `UIButton`, `UISwitch`, etc. | ✅ State      |
+| Media        | `AVPlayer`                   | ✅ State      |
+
+---
+
