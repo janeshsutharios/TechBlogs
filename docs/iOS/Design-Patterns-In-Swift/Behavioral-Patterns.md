@@ -1109,7 +1109,7 @@ nav.navigate(from: "Home", to: "Work")
 - `UIViewControllerTransitioningDelegate` allows different transition *animation strategies*
 
 ---
-
+<a id="template-method"></a>
 # 📝 Template Method (Behavioral)
 
 The **Template Method** pattern defines the *skeleton* of an algorithm in a base class, while allowing subclasses to redefine specific steps without changing the algorithm's overall structure.
