@@ -1108,6 +1108,8 @@ nav.navigate(from: "Home", to: "Work")
 - `UICollectionView` / `UITableView` uses different *layout strategies* (`UICollectionViewFlowLayout`, `UICollectionViewCompositionalLayout`)
 - `UIViewControllerTransitioningDelegate` allows different transition *animation strategies*
 
+---
+
 # 📝 Template Method (Behavioral)
 
 The **Template Method** pattern defines the *skeleton* of an algorithm in a base class, while allowing subclasses to redefine specific steps without changing the algorithm's overall structure.
@@ -1191,8 +1193,6 @@ Apple calls the template lifecycle internally, but gives you hooks to override c
 | Subclass       | Overrides one or more steps to provide specific behavior |
 
 > ✅ Helps maintain algorithm consistency while offering flexibility for customization.
-
-Sure! Here's the enhanced `👣 Visitor (Behavioral)` section with **usage example** added — fully formatted in **Markdown** for a `README.md`.
 
 ---
 
