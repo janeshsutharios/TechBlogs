@@ -1,4 +1,4 @@
-# 💍 Singleton(Creational)
+## 💍 Singleton(Creational)
 Purpose: Ensure a class has only one instance with global access
 # ✅ Singleton in Swift
 
@@ -73,8 +73,7 @@ class CoreDataStack: ObservableObject {
 - User session manager
 - Theme/Appearance manager
 
-<a name="factory-method"></a>
-# 🏭 Factory-Method(Creational)
+## 🏭 Factory-Method(Creational)
 It provides a way to delegate the instantiation of objects to subclasses.
 Instead of calling a constructor directly, the client calls a method that returns an instance of a product, allowing the code to remain flexible and loosely coupled.
 
@@ -153,7 +152,7 @@ let cappuccinoMachine = CappuccinoMachine()
 cappuccinoMachine.serveCoffee()
 ````
 
-# 🏗️ Abstract Factory(Creational)
+## 🏗️ Abstract Factory(Creational)
  **Abstract Factory** is a creational design pattern that lets you produce families of related objects without specifying their concrete classes. It provides an interface for creating a group of related products, ensuring that they work well together.
 
 iOS Examples:
@@ -293,7 +292,7 @@ Think of a Coffee Machine that can make either an Espresso or a Cappuccino, depe
 Abstract Factory:
 Think of a Furniture Set Factory. It produces a chair, a sofa, and a table — all of the same style (e.g., Victorian or Modern).
 
-# 👷 Builder(Creational)
+## 👷 Builder(Creational)
 - Constructs complex objects step by step.
 - Useful when an object needs to be constructed with many configuration options (e.g., URL requests, form data).
 
@@ -382,7 +381,7 @@ if let request = request {
 }
 ````
 
-# ♾️ Monostate(Creational)
+## ♾️ Monostate(Creational)
 Shared State Pattern: All instances of a class share the same internal state (static variables), making them behave like a singleton.
 Bonus: Unlike Singleton (one instance), Monostate allows multiple "fake" instances with shared data. 🎭
 | Feature       | Singleton           | Monostate                           |
@@ -448,7 +447,7 @@ let config2 = AppConfiguration()
 print(config2.environment) // .staging
 print(config2.isFeatureEnabled("NewOnboarding")) // true
 ````
-# 🖨️ Prototype Pattern (Creational)
+## 🖨️ Prototype Pattern (Creational)
 
 ## Context:
 Purpose: Clone objects instead of creating new ones
