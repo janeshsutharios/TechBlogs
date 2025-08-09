@@ -1,3 +1,4 @@
+<a name="Singleton(Creational)"></a>
 # 💍 Singleton(Creational)
 Purpose: Ensure a class has only one instance with global access
 # ✅ Singleton in Swift
