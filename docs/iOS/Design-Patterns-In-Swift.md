@@ -13,3 +13,9 @@
 |                          |                          | [🎯 Strategy](https://janeshsutharios.github.io/TechBlogs/iOS/Design-Patterns-In-Swift/Behavioral-Patterns)           |
 |                          |                          | [📄 Template Method](https://janeshsutharios.github.io/TechBlogs/iOS/Design-Patterns-In-Swift/Behavioral-Patterns) |
 |                          |                          | [👣 Visitor](https://janeshsutharios.github.io/TechBlogs/iOS/Design-Patterns-In-Swift/Behavioral-Patterns)             |
+
+
+## 📚 References
+
+- Gamma, E., Helm, R., Johnson, R., & Vlissides, J. (1994). *Design Patterns: Elements of Reusable Object-Oriented Software*. Addison-Wesley.  
+  Commonly known as the **"Gang of Four" (GoF)** book, this is the original source that formalized many of the design patterns used today.
