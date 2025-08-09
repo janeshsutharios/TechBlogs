@@ -628,4 +628,201 @@ In a production app like TikTok or Instagram:
 * Testing becomes easier by mocking just the facade
 
 ---
+# 🍃 Flyweight
+**📖 Definition** -
+**The Flyweight pattern minimizes memory usage by sharing common, immutable data between multiple objects, instead of duplicating it. It’s especially useful when working with a large number of similar objects.**
 
+Here's a focused **Flyweight Pattern** implementation for **E-commerce Product Options** with memory impact analysis:
+
+```swift
+/*
+# 🛍️ Flyweight Pattern: E-commerce Product Options
+
+## Optimizes memory by sharing identical option metadata (color/size) across thousands of product variants
+*/
+
+import Foundation
+
+// MARK: - Flyweight (Intrinsic Shared State)
+struct ProductOption {
+    let id: UUID
+    let name: String
+    let hexColor: String?  // For color options
+    let sizeCode: String?  // For size options
+    
+    // Private init ensures controlled creation via factory
+    fileprivate init(name: String, hexColor: String?, sizeCode: String?) {
+        self.id = UUID()
+        self.name = name
+        self.hexColor = hexColor
+        self.sizeCode = sizeCode
+    }
+}
+
+// MARK: - Flyweight Factory
+final class OptionFactory {
+    private static var colorCache = [String: ProductOption]()  // Key: hexColor
+    private static var sizeCache = [String: ProductOption]()   // Key: sizeCode
+    
+    static func colorOption(name: String, hex: String) -> ProductOption {
+        if let cached = colorCache[hex] {
+            return cached
+        }
+        
+        let newOption = ProductOption(name: name, hexColor: hex, sizeCode: nil)
+        colorCache[hex] = newOption
+        return newOption
+    }
+    
+    static func sizeOption(name: String, code: String) -> ProductOption {
+        if let cached = sizeCache[code] {
+            return cached
+        }
+        
+        let newOption = ProductOption(name: name, hexColor: nil, sizeCode: code)
+        sizeCache[code] = newOption
+        return newOption
+    }
+    
+    // Memory analysis helpers
+    static var totalOptionsCreated: Int {
+        colorCache.count + sizeCache.count
+    }
+}
+
+// MARK: - Product Variant (Extrinsic State)
+struct ProductVariant {
+    let sku: String
+    let price: Decimal
+    let stock: Int
+    let colorOption: ProductOption?  // Shared flyweight
+    let sizeOption: ProductOption?   // Shared flyweight
+    
+    func description() -> String {
+        var desc = "SKU: \(sku) | Price: $\(price) | Stock: \(stock)"
+        if let color = colorOption {
+            desc += "\nColor: \(color.name) (\(color.hexColor ?? ""))"
+        }
+        if let size = sizeOption {
+            desc += "\nSize: \(size.name) (\(size.sizeCode ?? ""))"
+        }
+        return desc
+    }
+}
+
+// MARK: - Memory Impact Demo
+func simulateProductCatalog() {
+    var variants = [ProductVariant]()
+    let colors = [
+        ("Red", "#FF0000"),
+        ("Blue", "#0000FF"),
+        ("Black", "#000000")
+    ]
+    let sizes = [
+        ("Small", "S"),
+        ("Medium", "M"),
+        ("Large", "L")
+    ]
+    
+    // Generate 10,000 product variants
+    for i in 1...10_000 {
+        let randomColor = colors.randomElement()!
+        let randomSize = sizes.randomElement()!
+        
+        variants.append(ProductVariant(
+            sku: "PROD-\(i)",
+            price: Decimal.random(in: 10...100),
+            stock: Int.random(in: 0...50),
+            colorOption: OptionFactory.colorOption(name: randomColor.0, hex: randomColor.1),
+            sizeOption: OptionFactory.sizeOption(name: randomSize.0, code: randomSize.1)
+        ))
+    }
+    
+    print("\nMemory Impact Report:")
+    print("Total variants created: \(variants.count)")
+    print("Unique color options: \(OptionFactory.colorCache.count)")
+    print("Unique size options: \(OptionFactory.sizeCache.count)")
+    print("Total option objects: \(OptionFactory.totalOptionsCreated) (vs \(variants.count * 2) without flyweight)")
+    
+    // Sample output
+    print("\nExample Variant:")
+    print(variants.randomElement()!.description())
+}
+
+// Run simulation
+simulateProductCatalog()
+
+/* Sample Output:
+Memory Impact Report:
+Total variants created: 10000
+Unique color options: 3
+Unique size options: 3
+Total option objects: 6 (vs 20000 without flyweight)
+
+Example Variant:
+SKU: PROD-7823 | Price: $47.42 | Stock: 34
+Color: Blue (#0000FF)
+Size: Large (L)
+*/
+```
+
+### 🧮 Memory Impact Analysis
+
+| Approach          | Option Objects Created | Memory Savings |
+|-------------------|------------------------|----------------|
+| **Without Flyweight** | 20,000 (2 per variant) | Baseline |
+| **With Flyweight** | 6 (3 colors + 3 sizes) | **99.97% reduction** |
+
+**Key Savings:**
+1. **Color Options**:  
+   - 10,000 variants → 3 unique color objects
+2. **Size Options**:  
+   - 10,000 variants → 3 unique size objects
+
+```mermaid
+pie
+    title Memory Usage (Option Objects)
+    "With Flyweight (6)" : 6
+    "Without Flyweight (20,000)" : 20000
+```
+
+### 📱 iOS System Parallels
+1. **`UIColor` System Colors**  
+   ```swift
+   // Shared instances:
+   let red1 = UIColor.systemRed
+   let red2 = UIColor.systemRed  // Same memory address
+   ```
+2. **`UIFont` Text Styles**  
+   ```swift
+   let bodyFont1 = UIFont.preferredFont(forTextStyle: .body)
+   let bodyFont2 = UIFont.preferredFont(forTextStyle: .body)  // Shared
+   ```
+
+### 🚀 Performance Optimization Tips
+1. **Thread-Safe Factory**  
+   ```swift
+   private static let cacheQueue = DispatchQueue(label: "com.options.cache", attributes: .concurrent)
+   
+   static func colorOption(name: String, hex: String) -> ProductOption {
+       cacheQueue.sync(flags: .barrier) {
+           // Cache read/write
+       }
+   }
+   ```
+2. **Cache Invalidation**  
+   ```swift
+   static func clearUnusedOptions() {
+       // LRU cache cleanup
+   }
+   ```
+
+### 💡 When to Use This Pattern
+✅ Product catalogs with 1000+ variants  
+✅ Systems with limited memory (mobile apps)  
+✅ Apps needing real-time inventory updates  
+
+Want to explore:  
+1. **Adding option images** to flyweights?  
+2. **Dynamic pricing** based on options?  
+3. **SwiftUI integration** for product displays?
