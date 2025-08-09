@@ -1,6 +1,5 @@
 ## 💍 Singleton(Creational)
 Purpose: Ensure a class has only one instance with global access
-# ✅ Singleton in Swift
 
 A **Singleton** is a design pattern that ensures a class has only **one instance** and provides a **global access point** to it.
 
