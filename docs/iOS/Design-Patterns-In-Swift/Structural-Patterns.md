@@ -1,3 +1,4 @@
+# 🧩 Structural Design Pattern
 ## 🔌 Adapter (Structural)
 
 The **Adapter** pattern allows incompatible interfaces to work together by converting the interface of one class into an interface expected by the client. It's like a power plug adapter that lets a U.S. charger work in a European socket.
