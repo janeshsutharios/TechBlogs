@@ -74,7 +74,7 @@ class CoreDataStack: ObservableObject {
 - Theme/Appearance manager
 
 
-<a name="Factory-Method(Creational)"></a>
+<a id="factory-method"></a>
 # 🏭 Factory-Method(Creational)
 It provides a way to delegate the instantiation of objects to subclasses.
 Instead of calling a constructor directly, the client calls a method that returns an instance of a product, allowing the code to remain flexible and loosely coupled.
