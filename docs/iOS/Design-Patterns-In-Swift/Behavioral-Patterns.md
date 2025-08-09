@@ -1,3 +1,4 @@
+# Behavioral Design Pattern
 ## ⛓️ Chain Of Responsibility(Behavioral)
 Decouples request senders from receivers by allowing multiple handlers to process a request sequentially. Each handler decides to act or pass it down the chain.
 
