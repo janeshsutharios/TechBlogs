@@ -118,7 +118,9 @@ Swift Implementation: Restaurant Order System
     Invoker (OrderManager): Manages command execution, history (for undo), and queuing.
 
     Receiver (KitchenSystem): Actually performs the actions (e.g., cooks food).
+   
 ```swift
+
 // MARK: - Receiver (Knows HOW to perform actions)
 final class KitchenSystem {
     func prepareOrder(_ dish: String) {
