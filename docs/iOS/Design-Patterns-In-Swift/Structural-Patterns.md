@@ -1,4 +1,4 @@
-# 🔌 Adapter (Structural)
+## 🔌 Adapter (Structural)
 
 The **Adapter** pattern allows incompatible interfaces to work together by converting the interface of one class into an interface expected by the client. It's like a power plug adapter that lets a U.S. charger work in a European socket.
 
@@ -82,7 +82,7 @@ iOS uses the Adapter pattern in many places:
 
 ---
 
-# 🌉 Bridge (Structural)
+## 🌉 Bridge (Structural)
 
 ### 🧠 Intent
 
@@ -187,7 +187,7 @@ Got it — here’s your **🌿 Composite Pattern** explanation in clean, GitHub
 
 ---
 
-# 🌿 Composite (Structural)
+## 🌿 Composite (Structural)
 
 ### 🧠 Definition:
 
@@ -282,7 +282,7 @@ rootFolder.display()
 * Common in **UI trees, graphics engines, DOM structures, file explorers**.
 
 ---
-# 🎨 Decorator (Structural)
+## 🎨 Decorator (Structural)
 🧠 **Definition**
 The Decorator Pattern allows you to add new behavior to an object dynamically without modifying its existing code.
 It wraps the original object inside another object that adds the extra functionality — just like adding toppings to ice cream without changing the ice cream itself.
@@ -831,7 +831,7 @@ Here’s a **clear README-style explanation** for **🔒 Protection Proxy** in S
 
 ---
 
-# 🔒 Protection Proxy (Structural)
+## 🔒 Protection Proxy (Structural)
 ## 📖 Definition
 A **Protection Proxy** controls access to an object by checking permissions, authentication, or other access rules before allowing operations on it.
 It acts like a **gatekeeper** — requests pass through it, and it decides whether to forward them to the real object.
@@ -909,7 +909,7 @@ Here’s your **README-style** explanation for **👻 Virtual Proxy** with an **
 
 ---
 
-# 👻 Virtual Proxy (Structural)
+## 👻 Virtual Proxy (Structural)
 
 ## 📖 Definition
 
