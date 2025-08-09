@@ -1,4 +1,4 @@
-# ⛓️ Chain Of Responsibility(Behavioral)
+# ⛓️ Chain Of Responsibility(Behavioral):
 Decouples request senders from receivers by allowing multiple handlers to process a request sequentially. Each handler decides to act or pass it down the chain.
 
 **Example - Expense Approval System** 
@@ -101,7 +101,7 @@ for expense in expenses {
 */
 ````
 
-# 🖥️ Command (Behavioral)
+# 🖥️ Command (Behavioral):
 
 Example 
 Scenario:
@@ -804,7 +804,7 @@ demonstrateTextEditor()
 */
 ````
 
-# 👀 Observer (Behavioral)
+# 👀 Observer (Behavioral):
 
 Establishes a one-to-many dependency between objects so that when one object changes state, all its dependents are notified automatically.
 
