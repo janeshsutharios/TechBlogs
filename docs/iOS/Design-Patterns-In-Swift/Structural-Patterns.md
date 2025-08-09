@@ -284,8 +284,9 @@ rootFolder.display()
 ---
 # 🎨 Decorator (Structural)
 🧠 **Definition**
-The Decorator Pattern allows you to add new behavior to an object dynamically without modifying its existing code. It w
-
+The Decorator Pattern allows you to add new behavior to an object dynamically without modifying its existing code.
+It wraps the original object inside another object that adds the extra functionality — just like adding toppings to ice cream without changing the ice cream itself.
+This provides a flexible alternative to using inheritance to modify behaviour
 📱 iOS Real Example
 * UIKit: NSAttributedString
     * Base text is wrapped with attributes like `.foregroundColor, .font, .underline`.
