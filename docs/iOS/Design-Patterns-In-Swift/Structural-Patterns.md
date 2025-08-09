@@ -905,4 +905,92 @@ guestUser.updateSystemConfig()  // ❌ Denied
 * Control access to **sensitive resources** (keychain, files, settings).
 
 ---
+Here’s your **README-style** explanation for **👻 Virtual Proxy** with an **iOS-friendly example** that compiles.
 
+---
+
+#👻 Virtual Proxy (Structural)
+
+## 📖 Definition
+
+A **Virtual Proxy** acts as a placeholder for a **resource-heavy object**, creating it **only when it’s actually needed**.
+It’s like saying: *"Don’t make the expensive thing until someone actually asks for it."*
+
+---
+
+## 🎯 Real-World Analogy
+
+Think of a **restaurant menu picture**:
+
+* You don’t cook the dish (real object) until the customer orders it.
+* The **menu image** (proxy) represents the dish without incurring the cost of preparing it upfront.
+
+---
+
+## 📱 iOS Real Example
+
+In an iOS photo gallery app:
+
+* Instead of loading **high-resolution images** immediately (which consumes memory and network),
+  you load **thumbnails** first.
+* When the user taps on a photo, the **Virtual Proxy** loads the full-resolution image **on demand**.
+
+---
+
+## 🛠 Usage Example (Compiling Swift Demo)
+
+```swift
+protocol HighResImage {
+    func display()
+}
+
+// Real heavy object
+class RealHighResImage: HighResImage {
+    private let filename: String
+    
+    init(filename: String) {
+        self.filename = filename
+        loadFromDisk()
+    }
+    
+    private func loadFromDisk() {
+        print("📂 Loading high-res image from disk: \(filename)")
+    }
+    
+    func display() {
+        print("🖼 Displaying high-res image: \(filename)")
+    }
+}
+
+// Virtual Proxy
+class ImageProxy: HighResImage {
+    private let filename: String
+    private var realImage: RealHighResImage?
+    
+    init(filename: String) {
+        self.filename = filename
+    }
+    
+    func display() {
+        if realImage == nil {
+            realImage = RealHighResImage(filename: filename)
+        }
+        realImage?.display()
+    }
+}
+
+// Usage
+let image = ImageProxy(filename: "big_photo.png")
+print("📱 App loaded, image not yet displayed.")
+image.display()  // Loads on demand
+```
+
+---
+
+## 💡 Why Use It in iOS?
+
+* Lazy load **media files** (images, videos, PDFs) for better performance.
+* Delay initialization of **heavy Core Data fetches** until required.
+* Reduce **startup time** by loading only essential objects at launch.
+
+---
