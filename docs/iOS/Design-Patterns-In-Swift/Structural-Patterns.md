@@ -185,3 +185,106 @@ oneTime.makePayment(amount: 499.0)
 * `UIView` uses a `CALayer` underneath → a form of **bridge** between visual abstraction and rendering engine.
 * `NSURLSession` is an abstraction that can delegate network behavior to different `URLProtocol` implementations.
 * In SwiftUI, `View` is protocol-based but rendering is handled separately by the system — another subtle bridge.
+
+Got it — here’s your **🌿 Composite Pattern** explanation in clean, GitHub-ready markdown.
+
+---
+
+# 🌿 Composite (Structural)
+
+### 🧠 Definition:
+
+The **Composite Pattern** lets you treat individual objects and compositions of objects uniformly. It’s perfect for representing **hierarchical, tree-like structures** where you want to work with both single items and groups in the same way.
+
+---
+
+### 🧾 Real-World Example:
+
+**File System**
+
+* A **File** is a single item.
+* A **Folder** can contain files and other folders.
+* Both `File` and `Folder` can be treated using the same operations like `getSize()`, `displayName()`, or `delete()`.
+
+---
+
+### 📱 iOS Real Example:
+
+* **UIView hierarchy** in UIKit or **View** hierarchy in SwiftUI.
+* `UIView` can be:
+
+  * A leaf (e.g., `UILabel`, `UIImageView`)
+  * A composite (e.g., `UIStackView` containing other views)
+* Both respond to methods like `.addSubview()` and `.removeFromSuperview()`.
+
+---
+
+### 🧑‍💻 Swift Example:
+
+```swift
+// Component Protocol
+protocol FileSystemItem {
+    var name: String { get }
+    func display(indentation: String)
+}
+
+// Leaf
+struct File: FileSystemItem {
+    let name: String
+    func display(indentation: String) {
+        print("\(indentation)📄 \(name)")
+    }
+}
+
+// Composite
+class Folder: FileSystemItem {
+    let name: String
+    private var items: [FileSystemItem] = []
+
+    init(name: String) {
+        self.name = name
+    }
+
+    func add(_ item: FileSystemItem) {
+        items.append(item)
+    }
+
+    func display(indentation: String = "") {
+        print("\(indentation)📂 \(name)")
+        items.forEach { $0.display(indentation: indentation + "  ") }
+    }
+}
+
+// Usage
+let file1 = File(name: "Resume.pdf")
+let file2 = File(name: "CoverLetter.pdf")
+let docsFolder = Folder(name: "Documents")
+docsFolder.add(file1)
+docsFolder.add(file2)
+
+let rootFolder = Folder(name: "Home")
+rootFolder.add(docsFolder)
+rootFolder.display()
+```
+
+**Output:**
+
+```
+📂 Home
+  📂 Documents
+    📄 Resume.pdf
+    📄 CoverLetter.pdf
+```
+
+---
+
+### 🧰 When to Use:
+
+* Represent part-whole hierarchies.
+* You want to treat individual objects and groups of objects uniformly.
+* Common in **UI trees, graphics engines, DOM structures, file explorers**.
+
+---
+
+If you want, I can also make a **SwiftUI composite example** where views are dynamically built in a recursive manner — perfect for scalable UI systems. That example would make the iOS connection even stronger.
+  
