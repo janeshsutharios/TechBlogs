@@ -831,7 +831,7 @@ Here’s a **clear README-style explanation** for **🔒 Protection Proxy** in S
 
 ---
 
-#🔒 Protection Proxy (Structural)
+# 🔒 Protection Proxy (Structural)
 ## 📖 Definition
 A **Protection Proxy** controls access to an object by checking permissions, authentication, or other access rules before allowing operations on it.
 It acts like a **gatekeeper** — requests pass through it, and it decides whether to forward them to the real object.
