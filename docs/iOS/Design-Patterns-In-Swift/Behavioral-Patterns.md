@@ -1,4 +1,4 @@
-# ⛓️ Chain Of Responsibility(Behavioral):
+## ⛓️ Chain Of Responsibility(Behavioral)
 Decouples request senders from receivers by allowing multiple handlers to process a request sequentially. Each handler decides to act or pass it down the chain.
 
 **Example - Expense Approval System** 
@@ -101,7 +101,7 @@ for expense in expenses {
 */
 ````
 
-# 🖥️ Command (Behavioral):
+## 🖥️ Command (Behavioral)
 
 Example 
 Scenario:
@@ -223,7 +223,7 @@ orderManager.undoLast()
 // Output: 🚫 Cancelled: Pizza
 ````
 
-# 📜 Interpreter (Behavioral)
+## 📜 Interpreter (Behavioral)
 The Interpreter Pattern is used to define a grammar for a language and provide an interpreter to evaluate expressions in that language. It's useful for:
 
 - Domain-Specific Languages (DSLs) (e.g., SQL, regex)
@@ -354,7 +354,7 @@ Key Benefits
 
 ✅ Great for Rule-Based Systems: E.g., pricing engines ("IF customer IS premium THEN APPLY 10% DISCOUNT").
 
-# 🔁 Iterator(Behavioral)
+## 🔁 Iterator(Behavioral)
 
 The Iterator is a behavioral design pattern that provides a way to access elements of a collection sequentially without exposing its underlying representation. It's one of the most fundamental and frequently used patterns in iOS development.
 Core Concept
@@ -466,7 +466,7 @@ Key Benefits in iOS Development
 - You're working with tree/graph structures
 
 
-# 📡 Mediator (Behavioral): 
+## 📡 Mediator (Behavioral): 
 The Mediator pattern centralizes complex communication between related objects, making them communicate through a single mediator instead of directly. This reduces tight coupling and simplifies maintenance, especially useful in UI frameworks like chat apps or Stock trading app
 
 Example: Stock Trading Platform
@@ -644,7 +644,7 @@ demonstrateStockExchange()
 📉 Sell order submitted: 800 x AAPL @ 176.0
 */
 ````
-# 💾 Memento (Behavioral)
+## 💾 Memento (Behavioral)
 *Captures and externalizes an object's state for later restoration without breaking encapsulation. Enables undo/redo functionality and snapshots.*  
 **Example:** *Text editor undo stack, game save points, or database transactions.*  
 
@@ -806,7 +806,7 @@ demonstrateTextEditor()
 */
 ````
 
-# 👀 Observer (Behavioral):
+## 👀 Observer (Behavioral):
 
 Establishes a one-to-many dependency between objects so that when one object changes state, all its dependents are notified automatically.
 
@@ -865,7 +865,7 @@ This is the modern Swift (Combine) way to implement Observer pattern with:
 
     Built-in memory management
 
-# 🔄 State (Behavioral)
+## 🔄 State (Behavioral)
 
 The **State pattern** allows an object to alter its behavior when its internal state changes — it appears as if the object changed its class. It's useful when an object must change behavior at runtime depending on its current state.
 
@@ -1016,7 +1016,7 @@ Each of these internal states modifies what actions are allowed (e.g., can't pau
 | Media        | `AVPlayer`                   | ✅ State      |
 
 ---
-# 🎯 Strategy (Behavioral)
+## 🎯 Strategy (Behavioral)
 
 The **Strategy Pattern** is used to define a family of algorithms, encapsulate each one, and make them interchangeable. It allows the algorithm to vary independently from clients that use it.
 
