@@ -282,7 +282,7 @@ rootFolder.display()
 * Common in **UI trees, graphics engines, DOM structures, file explorers**.
 
 ---
-# 🍧 Decorator (Structural)
+# 🎨 Decorator (Structural)
 🧠 **Definition**
 The Decorator Pattern allows you to add new behavior to an object dynamically without modifying its existing code. It w
 
@@ -513,9 +513,8 @@ player.stop()
 * Avoids explosion of specialized player subclasses.
   
 🧰 When to Use
-You need to add behavior without altering the original class.
-
-You want flexibility to combine features at runtime.
-
-Common in UI modifications, stream processing, logging, and formatting
+* You need to add behavior without altering the original class.
+* You want flexibility to combine features at runtime.
+* Common in UI modifications, stream processing, logging, and formatting
 ---
+
