@@ -826,3 +826,83 @@ Want to explore:
 1. **Adding option images** to flyweights?  
 2. **Dynamic pricing** based on options?  
 3. **SwiftUI integration** for product displays?
+4. 
+Here’s a **clear README-style explanation** for **🔒 Protection Proxy** in Swift with an iOS context.
+
+---
+
+#🔒 Protection Proxy (Structural)
+## 📖 Definition
+A **Protection Proxy** controls access to an object by checking permissions, authentication, or other access rules before allowing operations on it.
+It acts like a **gatekeeper** — requests pass through it, and it decides whether to forward them to the real object.
+
+---
+
+## 🎯 Real-World Analogy
+
+Think of a **nightclub bouncer**.
+
+* The **bouncer (proxy)** checks your ID and dress code before letting you in.
+* The **club (real object)** is only accessible if you meet the rules.
+
+---
+
+## 📱 iOS Real Example
+
+Imagine an **admin settings screen** in an iOS app:
+
+* Without the right **user role**, you can’t modify sensitive data.
+* The **Protection Proxy** sits between the UI and the actual settings logic, ensuring only authorized users can make changes.
+
+---
+
+## 🛠 Usage Example (Compiling Swift Demo)
+
+```swift
+protocol AdminSettings {
+    func updateSystemConfig()
+}
+
+// Real object
+class RealAdminSettings: AdminSettings {
+    func updateSystemConfig() {
+        print("✅ System configuration updated successfully!")
+    }
+}
+
+// Protection Proxy
+class AdminSettingsProxy: AdminSettings {
+    private let realSettings = RealAdminSettings()
+    private let currentUserRole: String
+    
+    init(userRole: String) {
+        self.currentUserRole = userRole
+    }
+    
+    func updateSystemConfig() {
+        guard currentUserRole == "admin" else {
+            print("❌ Access Denied: You are not authorized to update system configuration.")
+            return
+        }
+        realSettings.updateSystemConfig()
+    }
+}
+
+// Usage
+let adminUser = AdminSettingsProxy(userRole: "admin")
+adminUser.updateSystemConfig()  // ✅ Allowed
+
+let guestUser = AdminSettingsProxy(userRole: "guest")
+guestUser.updateSystemConfig()  // ❌ Denied
+```
+
+---
+
+## 💡 Why Use It in iOS?
+
+* Restrict certain features based on **user roles** (admin, premium, guest).
+* Prevent **unauthorized API calls** from the client side.
+* Control access to **sensitive resources** (keychain, files, settings).
+
+---
+
