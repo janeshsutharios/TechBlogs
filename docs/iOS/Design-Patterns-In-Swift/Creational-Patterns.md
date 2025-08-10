@@ -311,14 +311,15 @@ if let request = request {
 ## ♾️ Monostate(Creational)
 Shared State Pattern: All instances of a class share the same internal state (static variables), making them behave like a singleton.
 Bonus: Unlike Singleton (one instance), Monostate allows multiple "fake" instances with shared data. 🎭
----
-| Feature       | Singleton           | Monostate                           |
-| ------------- | ------------------- | ----------------------------------- |
-| Instantiation | One only (`shared`) | Many, but share state               |
-| Global Access | Yes                 | No (needs passing around instances) |
-| Testability   | Harder              | Easier                              |
-| Subclassing   | Restrictive         | Flexible                            |
----
+
+| Feature       | Singleton         | Monostate                   |
+|---------------|-------------------|-----------------------------|
+| Instantiation | One only (shared) | Many, but share state       |
+| Global Access | Yes               | No (needs passing instances)|
+| Testability   | Harder            | Easier                      |
+| Subclassing   | Restrictive       | Flexible                    |
+
+
 ```swift
 final class AppConfiguration: Sendable {
     private static let lock = NSLock()
