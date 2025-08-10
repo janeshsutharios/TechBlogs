@@ -616,20 +616,27 @@ iOS Examples:
 ### 🧩 Basic Implementation
 
 ```swift
-final class MySingleton {
-    static let shared = MySingleton()
+// Thread Safe Singleton
+actor Singleton {
+    static let shared = Singleton()
+    private init() {}
     
-    private init() {
-        // Prevent external initialization
+    private var _data: String = "Default"
+    
+    // Isolated access to mutable state
+    func setData(_ value: String) {
+        _data = value
     }
-
-    func doSomething() {
-        print("Doing something...")
+    
+    func getData() -> String {
+        _data
     }
 }
-// Usage:
-MySingleton.shared.doSomething()
-
+// Usage:-
+Task {
+    await Singleton.shared.setData("NewValue")  // Thread-safe
+    let data = await Singleton.shared.getData()
+}
 ````
 🔐 Why Use `private init()?`
 To prevent accidental instantiation from other parts of the code:
