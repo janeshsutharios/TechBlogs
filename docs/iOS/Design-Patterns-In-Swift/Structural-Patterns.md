@@ -629,7 +629,8 @@ In a production app like TikTok or Instagram:
 * Testing becomes easier by mocking just the facade
 
 ---
-# 🍃 Flyweight
+## 🍃 Flyweight(Structural)
+
 **📖 Definition** -
 **The Flyweight pattern minimizes memory usage by sharing common, immutable data between multiple objects, instead of duplicating it. It’s especially useful when working with a large number of similar objects.**
 
@@ -822,14 +823,6 @@ pie
 ✅ Product catalogs with 1000+ variants  
 ✅ Systems with limited memory (mobile apps)  
 ✅ Apps needing real-time inventory updates  
-
-Want to explore:  
-1. **Adding option images** to flyweights?  
-2. **Dynamic pricing** based on options?  
-3. **SwiftUI integration** for product displays?
-4. 
-Here’s a **clear README-style explanation** for **🔒 Protection Proxy** in Swift with an iOS context.
-
 ---
 
 ## 🔒 Protection Proxy (Structural)
