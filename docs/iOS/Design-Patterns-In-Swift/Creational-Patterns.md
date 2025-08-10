@@ -16,7 +16,7 @@ iOS Examples:
 ````
 
 ---
-## 🧩 Basic Implementation
+### 🧩 Basic Implementation
 
 ```swift
 final class MySingleton {
@@ -449,7 +449,7 @@ print(config2.isFeatureEnabled("NewOnboarding")) // true
 ````
 ## 🖨️ Prototype Pattern (Creational)
 
-## Context:
+### Context:
 Purpose: Clone objects instead of creating new ones
 In a scalable iOS app (like a design tool or a visual editor), users can create reusable "design elements" (buttons, cards, labels, etc.) and duplicate them easily. Each duplicated item should be an independent copy (not just a reference), preserving the current state but allowing customization afterward.
 
@@ -457,14 +457,14 @@ This is where the Prototype pattern shines.
 
 ---
 
-## ✅ When to Use:
+### When to Use:
 - You need to duplicate complex objects efficiently.
 - Object creation is costly (lots of setup/configuration).
 - You want to decouple instantiation from the object type.
 
 ---
 
-## 🔧 Example: UI Component Prototyping System
+### 🔧 Example: UI Component Prototyping System
 
 We’ll create a base `DesignComponent` protocol that requires `clone()`.
 
@@ -527,33 +527,33 @@ clonedButton.title = "Cancel" // Independent copy
 
 ---
 
-## 💡 Benefits:
+### 💡 Benefits:
 - Allows runtime duplication without knowing the exact class.
 - Helps isolate state between cloned instances.
 - Makes UI building tools and design systems very flexible.
 
 ---
 
-## 📦 Real-world Analogy:
+### 📦 Real-world Analogy:
 Like duplicating slides in Keynote or Figma components — you want the same base, but modifiable independently.
 
 ---
 
-## 🧠 Related Concepts in iOS:
+### 🧠 Related Concepts in iOS:
 - `NSCopying` protocol is a native equivalent of the Prototype pattern.
 - Used in copy-on-write implementations like `Array`, `String`, `Data` (for performance).
 
 ---
 
-## 📱 Example Extension: Component Library
+### 📱 Example Extension: Component Library
 
 You can extend this system with a registry of default components and use `.clone()` to offer base templates to users in a design editor.
 
 ---
-## iOS Examples
+### iOS Examples
 ---
 
-## ✅ 1. UICollectionViewCell — `dequeueReusableCell`
+### ✅ 1. UICollectionViewCell — `dequeueReusableCell`
 `UICollectionViewCell — dequeueReusableCell(withIdentifier:)`
 Concept: Instead of creating new cells from scratch each time, iOS reuses a "prototype cell" (often registered via a nib or class), and dequeues a copy of it for display.
 
@@ -603,7 +603,7 @@ class ProductViewController: UICollectionViewController {
 
 ---
 
-## ✅ 2. UIView Copying via `NSCopying`
+### ✅ 2. UIView Copying via `NSCopying`
 UIView.copy() via NSCopying
 Concept: Classes that conform to NSCopying allow creating clones of an instance using `copy()` or `mutableCopy()`.
 
@@ -637,7 +637,7 @@ cloned.text = "Cloned"
 
 ---
 
-## ✅ 3. Codable — Decoding JSON Templates
+### ✅ 3. Codable — Decoding JSON Templates
 
  Codable objects decoded from JSON
 Concept: When you decode a JSON payload into Swift objects, you're essentially cloning data into a model structure.
