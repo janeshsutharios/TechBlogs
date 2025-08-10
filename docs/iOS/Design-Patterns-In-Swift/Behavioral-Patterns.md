@@ -355,7 +355,7 @@ Key Benefits
 
 ✅ Great for Rule-Based Systems: E.g., pricing engines ("IF customer IS premium THEN APPLY 10% DISCOUNT").
 
-## 🔁 Iterator(Behavioral)
+### 🔁 Iterator(Behavioral)
 
 The Iterator is a behavioral design pattern that provides a way to access elements of a collection sequentially without exposing its underlying representation. It's one of the most fundamental and frequently used patterns in iOS development.
 Core Concept
@@ -811,7 +811,7 @@ demonstrateTextEditor()
 
 Establishes a one-to-many dependency between objects so that when one object changes state, all its dependents are notified automatically.
 
-## Comparison with Similar Patterns
+### Comparison with Similar Patterns
 
 | Pattern       | Relation Direction | Communication Style | Use Case Example |
 |--------------|--------------------|---------------------|------------------|
