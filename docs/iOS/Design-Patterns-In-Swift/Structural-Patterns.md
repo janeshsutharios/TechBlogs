@@ -303,7 +303,7 @@ Here are **Top 5 real-world & iOS relatable examples** for the **🍧 Decorator 
 5. **🎮 Game Character Power-ups** – Base character gets temporary abilities like shields, speed boosts, invisibility.
 
 
-## 🎬 Decorator Pattern — Video Streaming Player (Scalable Example)
+### 🎬 Decorator Pattern — Video Streaming Player (Scalable Example)
 
 The **Decorator Pattern** is perfect for a streaming player: you keep a simple base player implementation and **attach features** (subtitles, watermark overlays, analytics, adaptive bitrate, etc.) at runtime — without changing the player itself. This yields a highly modular and scalable architecture: add/remove features independently, compose them in any order, and test each feature in isolation.
 
@@ -826,7 +826,7 @@ pie
 ---
 
 ## 🔒 Protection Proxy (Structural)
-## 📖 Definition
+### 📖 Definition
 A **Protection Proxy** controls access to an object by checking permissions, authentication, or other access rules before allowing operations on it.
 It acts like a **gatekeeper** — requests pass through it, and it decides whether to forward them to the real object.
 
@@ -841,7 +841,7 @@ Think of a **nightclub bouncer**.
 
 ---
 
-## 📱 iOS Real Example
+### 📱 iOS Real Example
 
 Imagine an **admin settings screen** in an iOS app:
 
@@ -850,7 +850,7 @@ Imagine an **admin settings screen** in an iOS app:
 
 ---
 
-## 🛠 Usage Example (Compiling Swift Demo)
+### 🛠 Usage Example (Compiling Swift Demo)
 
 ```swift
 protocol AdminSettings {
@@ -892,7 +892,7 @@ guestUser.updateSystemConfig()  // ❌ Denied
 
 ---
 
-## 💡 Why Use It in iOS?
+### 💡 Why Use It in iOS?
 
 * Restrict certain features based on **user roles** (admin, premium, guest).
 * Prevent **unauthorized API calls** from the client side.
@@ -905,7 +905,7 @@ Here’s your **README-style** explanation for **👻 Virtual Proxy** with an **
 
 ## 👻 Virtual Proxy (Structural)
 
-## 📖 Definition
+### 📖 Definition
 
 A **Virtual Proxy** acts as a placeholder for a **resource-heavy object**, creating it **only when it’s actually needed**.
 It’s like saying: *"Don’t make the expensive thing until someone actually asks for it."*
@@ -921,7 +921,7 @@ Think of a **restaurant menu picture**:
 
 ---
 
-## 📱 iOS Real Example
+### 📱 iOS Real Example
 
 In an iOS photo gallery app:
 
@@ -931,7 +931,7 @@ In an iOS photo gallery app:
 
 ---
 
-## 🛠 Usage Example (Compiling Swift Demo)
+### 🛠 Usage Example (Compiling Swift Demo)
 
 ```swift
 protocol HighResImage {
@@ -981,7 +981,7 @@ image.display()  // Loads on demand
 
 ---
 
-## 💡 Why Use It in iOS?
+### 💡 Why Use It in iOS?
 
 * Lazy load **media files** (images, videos, PDFs) for better performance.
 * Delay initialization of **heavy Core Data fetches** until required.
