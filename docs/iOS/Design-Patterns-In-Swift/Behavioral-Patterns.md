@@ -121,107 +121,125 @@ Swift Implementation: Restaurant Order System
     Receiver (KitchenSystem): Actually performs the actions (e.g., cooks food).
    
 ```swift
+import Foundation
 
-// MARK: - Receiver (Knows HOW to perform actions)
+// MARK: - 🍽️ Receiver
+// The Receiver is the object that knows how to perform the actual work.
+// It contains the business logic for the actions requested by the commands.
 final class KitchenSystem {
+    private var preparedDishes: [String] = []
+
     func prepareOrder(_ dish: String) {
-        print("🧑‍🍳 Cooking: \(dish)")
+        preparedDishes.append(dish)
+        print("🧑‍🍳 Cooking: \(dish).")
     }
-    
+
     func cancelOrder(_ dish: String) {
-        print("🚫 Cancelled: \(dish)")
+        if let index = preparedDishes.firstIndex(of: dish) {
+            preparedDishes.remove(at: index)
+            print("🚫 Cancelled: \(dish).")
+        } else {
+            print("❌ Error: \(dish) was not in the prepared list.")
+        }
     }
 }
 
-// MARK: - Command Protocol
+// MARK: - 📜 Command Protocol
+// This protocol defines the common interface for all commands.
+// It requires an `execute` method to perform an action and an `undo` method to reverse it.
 protocol Command {
     func execute()
     func undo()
 }
 
-// MARK: - Concrete Commands
+// MARK: - ➕ AddToCartCommand
+// This concrete command encapsulates the request to add an item to the cart.
+// It holds a reference to the Receiver (`KitchenSystem`) and the necessary parameters (`dish`).
 final class AddToCartCommand: Command {
     private let kitchen: KitchenSystem
     private let dish: String
-    
+
     init(kitchen: KitchenSystem, dish: String) {
         self.kitchen = kitchen
         self.dish = dish
     }
-    
+
     func execute() {
+        print("➡️ Executing AddToCartCommand.")
         kitchen.prepareOrder(dish)
     }
-    
+
     func undo() {
+        print("⬅️ Undoing AddToCartCommand.")
         kitchen.cancelOrder(dish)
     }
 }
 
+// MARK: - ❌ CancelOrderCommand
+// This concrete command encapsulates the request to cancel an order.
 final class CancelOrderCommand: Command {
     private let kitchen: KitchenSystem
     private let dish: String
-    
+
     init(kitchen: KitchenSystem, dish: String) {
         self.kitchen = kitchen
         self.dish = dish
     }
-    
+
     func execute() {
+        print("➡️ Executing CancelOrderCommand.")
         kitchen.cancelOrder(dish)
     }
-    
+
     func undo() {
-        kitchen.prepareOrder(dish) // Re-add if undone
+        // Undoing a cancellation is complex and context-dependent.
+        // In this simple example, we'll log a message. In a real app,
+        // this might involve creating a new 'prepare' command.
+        print("⬅️ Undoing CancelOrderCommand is not supported in this implementation.")
     }
 }
 
-// MARK: - Invoker (Manages commands)
-final class OrderManager {
-    private var commandQueue = [Command]()
+// MARK: - 🗃️ Invoker
+// The Invoker holds and manages the commands. It doesn't know about the
+// details of the commands or the Receiver. Its job is to execute and manage
+// a history of commands, enabling features like undo/redo.
+final class CommandInvoker {
     private var history = [Command]()
-    private let kitchen: KitchenSystem
-    
-    init(kitchen: KitchenSystem) {
-        self.kitchen = kitchen
+
+    func executeCommand(_ command: Command) {
+        command.execute()
+        history.append(command)
     }
-    
-    func addCommand(_ command: Command) {
-        commandQueue.append(command)
-    }
-    
-    func processCommands() {
-        commandQueue.forEach { cmd in
-            cmd.execute()
-            history.append(cmd) // Track for undo
+
+    func undoLastCommand() {
+        guard !history.isEmpty else {
+            print("⚠️ No commands to undo.")
+            return
         }
-        commandQueue.removeAll()
-    }
-    
-    func undoLast() {
-        guard !history.isEmpty else { return }
-        let lastCmd = history.removeLast()
-        lastCmd.undo()
+        let lastCommand = history.removeLast()
+        lastCommand.undo()
     }
 }
 
-// MARK: - Usage
+// MARK: - 🚀 Usage
+// The client code creates the commands and hands them off to the Invoker.
+// It interacts with the Invoker, not the commands or the Receiver directly,
+// demonstrating a clean separation of concerns.
+
 let kitchen = KitchenSystem()
-let orderManager = OrderManager(kitchen: kitchen)
+let invoker = CommandInvoker()
 
-// User adds items to cart
-orderManager.addCommand(AddToCartCommand(kitchen: kitchen, dish: "Burger"))
-orderManager.addCommand(AddToCartCommand(kitchen: kitchen, dish: "Pizza"))
+// User adds items to the cart, the invoker executes the commands
+invoker.executeCommand(AddToCartCommand(kitchen: kitchen, dish: "Burger"))
+invoker.executeCommand(AddToCartCommand(kitchen: kitchen, dish: "Pizza"))
 
-// Process all orders
-orderManager.processCommands() 
-// Output: 
-// 🧑‍🍳 Cooking: Burger  
-// 🧑‍🍳 Cooking: Pizza
+// User decides to undo the last action
+print("\nUser decides to undo the last action...\n")
+invoker.undoLastCommand()
 
-// User cancels last order
-orderManager.undoLast() 
-// Output: 🚫 Cancelled: Pizza
+// User undoes another action
+print("\nUser decides to undo another action...\n")
+invoker.undoLastCommand()
 ````
 
 ## 📜 Interpreter (Behavioral)
