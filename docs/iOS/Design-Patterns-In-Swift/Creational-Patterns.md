@@ -451,7 +451,9 @@ final class CardComponent: DesignComponent {
 let originalButton = ButtonComponent(title: "Submit", backgroundColor: "#FF5733", cornerRadius: 8.0)
 let clonedButton = originalButton.clone() as! ButtonComponent
 
-clonedButton.title = "Cancel" // Independent copy
+if let clonedButton = originalButton.clone() as? ButtonComponent {
+    clonedButton.title = "Cancel" // Independent copy
+}
 ```
 
 ---
