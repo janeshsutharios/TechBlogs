@@ -638,7 +638,6 @@ Here's a focused **Flyweight Pattern** implementation for **E-commerce Product O
 
 ```swift
 ## Example: Text Formatting in a Document Editor
-```swift
 import Foundation
 
 // Flyweight protocol
