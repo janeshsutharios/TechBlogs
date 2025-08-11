@@ -869,25 +869,6 @@ This is the modern Swift (Combine) way to implement Observer pattern with:
 
 The **State pattern** allows an object to alter its behavior when its internal state changes — it appears as if the object changed its class. It's useful when an object must change behavior at runtime depending on its current state.
 
----
-
-**🚦 Real-World Example: Traffic Signal System**
-
-Imagine a traffic light system that cycles through:
-
-**🔴 Red → 🟢 Green → 🟡 Yellow → 🔴 Red**
-
-Each light represents a state, and each state knows what the next state is. Rather than using a massive `switch` statement, we encapsulate each light as its own state object.
-
----
-
-### ✅ Benefits:
-- Avoids long `if-else` or `switch` logic.
-- Easy to modify or extend with new states.
-- Improves maintainability and testability.
-
----
-
 ### 🧑‍💻 Swift Code Example
 
 The State pattern is excellent for managing complex logic by encapsulating state-specific behavior into separate objects. This approach makes your code more scalable and easier to maintain than using large `switch` statements or conditional `if/else` logic. A classic example for a scalable app is a **document editor**, which can exist in various states like `Draft`, `Moderation`, and `Published`.
