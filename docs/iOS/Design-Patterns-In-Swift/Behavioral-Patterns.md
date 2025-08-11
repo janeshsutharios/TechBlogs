@@ -370,40 +370,44 @@ Solution: The Iterator pattern:
 
  - Keeps track of the current position
 
-iOS/Swift Implementation
-1. Native Swift Iterators
-
-Swift has built-in iterator support through two protocols:
 ```swift
-protocol Sequence {
-    associatedtype Iterator: IteratorProtocol
-    func makeIterator() -> Iterator
-}
-
-protocol IteratorProtocol {
-    associatedtype Element
-    mutating func next() -> Element?
-}
-````
-
-Let's create an iterator for your FoodApp that filters vegetarian items:
-
-```swift
-struct FoodItem {
+struct FoodItem: CustomStringConvertible {
     let name: String
     let isVegetarian: Bool
     let price: Double
+    
+    var description: String {
+        return name
+    }
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+struct Menu {
+    private let items: [FoodItem]
+    
+    init(items: [FoodItem]) {
+        self.items = items
+    }
+}
+
+extension Menu: Sequence {
+    // The makeIterator() method needs to return an iterator
+    // that knows how to filter for vegetarian items.
+    func makeIterator() -> VegetarianIterator {
+        return VegetarianIterator(items: self.items)
+    }
 }
 
 struct VegetarianIterator: IteratorProtocol {
-    private var iterator: IndexingIterator<[FoodItem]>
-    
+    private var internalIterator: IndexingIterator<[FoodItem]>
+
     init(items: [FoodItem]) {
-        self.iterator = items.makeIterator()
+        self.internalIterator = items.makeIterator()
     }
     
     mutating func next() -> FoodItem? {
-        while let item = iterator.next() {
+        while let item = internalIterator.next() {
             if item.isVegetarian {
                 return item
             }
@@ -412,19 +416,24 @@ struct VegetarianIterator: IteratorProtocol {
     }
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+
 // Usage:
-let menu = [
+let menu = Menu(items: [
     FoodItem(name: "Pizza", isVegetarian: true, price: 12.99),
     FoodItem(name: "Steak", isVegetarian: false, price: 24.99),
     FoodItem(name: "Salad", isVegetarian: true, price: 8.99)
-]
+])
 
-var vegIterator = VegetarianIterator(items: menu)
-while let item = vegIterator.next() {
-    print("Vegetarian option: \(item.name)")
+print("Vegetarian options:")
+for item in menu {
+    print("- \(item.name) at $\(item.price)")
 }
-// Prints: Pizza, Salad
-````
+// Prints
+//Vegetarian options:
+//- Pizza at $12.99
+//- Salad at $8.99
+```
 **Real-World iOS Examples**
    
 ```swift
