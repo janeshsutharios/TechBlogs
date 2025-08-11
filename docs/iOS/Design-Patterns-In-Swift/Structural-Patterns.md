@@ -637,192 +637,149 @@ In a production app like TikTok or Instagram:
 Here's a focused **Flyweight Pattern** implementation for **E-commerce Product Options** with memory impact analysis:
 
 ```swift
-/*
-# 🛍️ Flyweight Pattern: E-commerce Product Options
-
-## Optimizes memory by sharing identical option metadata (color/size) across thousands of product variants
-*/
-
+## Example: Text Formatting in a Document Editor
+```swift
 import Foundation
 
-// MARK: - Flyweight (Intrinsic Shared State)
-struct ProductOption {
-    let id: UUID
-    let name: String
-    let hexColor: String?  // For color options
-    let sizeCode: String?  // For size options
+// Flyweight protocol
+protocol TextFormatting {
+    func apply(to character: Character)
+}
+
+// Concrete Flyweight
+class CharacterFormatting: TextFormatting, Hashable {
+    let fontName: String
+    let fontSize: CGFloat
+    let color: UIColor
+    let isBold: Bool
+    let isItalic: Bool
     
-    // Private init ensures controlled creation via factory
-    fileprivate init(name: String, hexColor: String?, sizeCode: String?) {
-        self.id = UUID()
-        self.name = name
-        self.hexColor = hexColor
-        self.sizeCode = sizeCode
+    init(fontName: String, fontSize: CGFloat, color: UIColor, isBold: Bool, isItalic: Bool) {
+        self.fontName = fontName
+        self.fontSize = fontSize
+        self.color = color
+        self.isBold = isBold
+        self.isItalic = isItalic
+    }
+    
+    func apply(to character: Character) {
+        print("Displaying '\(character)' with: \(fontName), \(fontSize)pt, \(color), bold: \(isBold), italic: \(isItalic)")
+    }
+    
+    // Hashable conformance for use in a Set/Dictionary
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(fontName)
+        hasher.combine(fontSize)
+        hasher.combine(color)
+        hasher.combine(isBold)
+        hasher.combine(isItalic)
+    }
+    
+    static func == (lhs: CharacterFormatting, rhs: CharacterFormatting) -> Bool {
+        return lhs.fontName == rhs.fontName &&
+               lhs.fontSize == rhs.fontSize &&
+               lhs.color == rhs.color &&
+               lhs.isBold == rhs.isBold &&
+               lhs.isItalic == rhs.isItalic
     }
 }
 
-// MARK: - Flyweight Factory
-final class OptionFactory {
-    private static var colorCache = [String: ProductOption]()  // Key: hexColor
-    private static var sizeCache = [String: ProductOption]()   // Key: sizeCode
+// Flyweight Factory
+class FormattingFactory {
+    private var formats: [CharacterFormatting] = []
     
-    static func colorOption(name: String, hex: String) -> ProductOption {
-        if let cached = colorCache[hex] {
-            return cached
+    func getFormatting(fontName: String, fontSize: CGFloat, color: UIColor, isBold: Bool, isItalic: Bool) -> CharacterFormatting {
+        let newFormat = CharacterFormatting(
+            fontName: fontName,
+            fontSize: fontSize,
+            color: color,
+            isBold: isBold,
+            isItalic: isItalic
+        )
+        
+        if let existingFormat = formats.first(where: { $0 == newFormat }) {
+            return existingFormat
         }
         
-        let newOption = ProductOption(name: name, hexColor: hex, sizeCode: nil)
-        colorCache[hex] = newOption
-        return newOption
+        formats.append(newFormat)
+        return newFormat
     }
     
-    static func sizeOption(name: String, code: String) -> ProductOption {
-        if let cached = sizeCache[code] {
-            return cached
-        }
+    var totalFormatsCreated: Int {
+        return formats.count
+    }
+}
+
+// Client code - Document that uses formatted characters
+struct FormattedCharacter {
+    let character: Character
+    let formatting: CharacterFormatting
+    
+    func display() {
+        formatting.apply(to: character)
+    }
+}
+
+class Document {
+    private var characters: [FormattedCharacter] = []
+    private let formattingFactory = FormattingFactory()
+    
+    func addCharacter(_ char: Character, fontName: String, fontSize: CGFloat, color: UIColor, isBold: Bool, isItalic: Bool) {
+        let formatting = formattingFactory.getFormatting(
+            fontName: fontName,
+            fontSize: fontSize,
+            color: color,
+            isBold: isBold,
+            isItalic: isItalic
+        )
         
-        let newOption = ProductOption(name: name, hexColor: nil, sizeCode: code)
-        sizeCache[code] = newOption
-        return newOption
+        let formattedChar = FormattedCharacter(character: char, formatting: formatting)
+        characters.append(formattedChar)
     }
     
-    // Memory analysis helpers
-    static var totalOptionsCreated: Int {
-        colorCache.count + sizeCache.count
+    func display() {
+        characters.forEach { $0.display() }
     }
-}
-
-// MARK: - Product Variant (Extrinsic State)
-struct ProductVariant {
-    let sku: String
-    let price: Decimal
-    let stock: Int
-    let colorOption: ProductOption?  // Shared flyweight
-    let sizeOption: ProductOption?   // Shared flyweight
     
-    func description() -> String {
-        var desc = "SKU: \(sku) | Price: $\(price) | Stock: \(stock)"
-        if let color = colorOption {
-            desc += "\nColor: \(color.name) (\(color.hexColor ?? ""))"
-        }
-        if let size = sizeOption {
-            desc += "\nSize: \(size.name) (\(size.sizeCode ?? ""))"
-        }
-        return desc
+    func totalUniqueFormats() -> Int {
+        return formattingFactory.totalFormatsCreated
     }
 }
 
-// MARK: - Memory Impact Demo
-func simulateProductCatalog() {
-    var variants = [ProductVariant]()
-    let colors = [
-        ("Red", "#FF0000"),
-        ("Blue", "#0000FF"),
-        ("Black", "#000000")
-    ]
-    let sizes = [
-        ("Small", "S"),
-        ("Medium", "M"),
-        ("Large", "L")
-    ]
-    
-    // Generate 10,000 product variants
-    for i in 1...10_000 {
-        let randomColor = colors.randomElement()!
-        let randomSize = sizes.randomElement()!
-        
-        variants.append(ProductVariant(
-            sku: "PROD-\(i)",
-            price: Decimal.random(in: 10...100),
-            stock: Int.random(in: 0...50),
-            colorOption: OptionFactory.colorOption(name: randomColor.0, hex: randomColor.1),
-            sizeOption: OptionFactory.sizeOption(name: randomSize.0, code: randomSize.1)
-        ))
-    }
-    
-    print("\nMemory Impact Report:")
-    print("Total variants created: \(variants.count)")
-    print("Unique color options: \(OptionFactory.colorCache.count)")
-    print("Unique size options: \(OptionFactory.sizeCache.count)")
-    print("Total option objects: \(OptionFactory.totalOptionsCreated) (vs \(variants.count * 2) without flyweight)")
-    
-    // Sample output
-    print("\nExample Variant:")
-    print(variants.randomElement()!.description())
-}
+// Usage Example
+let document = Document()
 
-// Run simulation
-simulateProductCatalog()
+// Add many characters with different formatting
+document.addCharacter("H", fontName: "Helvetica", fontSize: 12, color: .black, isBold: true, isItalic: false)
+document.addCharacter("e", fontName: "Helvetica", fontSize: 12, color: .black, isBold: true, isItalic: false)
+document.addCharacter("l", fontName: "Helvetica", fontSize: 12, color: .black, isBold: true, isItalic: false)
+document.addCharacter("l", fontName: "Helvetica", fontSize: 12, color: .black, isBold: true, isItalic: false)
+document.addCharacter("o", fontName: "Helvetica", fontSize: 12, color: .black, isBold: true, isItalic: false)
+document.addCharacter(" ", fontName: "Helvetica", fontSize: 12, color: .black, isBold: false, isItalic: false)
+document.addCharacter("W", fontName: "Times New Roman", fontSize: 14, color: .blue, isBold: false, isItalic: true)
+document.addCharacter("o", fontName: "Times New Roman", fontSize: 14, color: .blue, isBold: false, isItalic: true)
+document.addCharacter("r", fontName: "Times New Roman", fontSize: 14, color: .blue, isBold: false, isItalic: true)
+document.addCharacter("l", fontName: "Times New Roman", fontSize: 14, color: .blue, isBold: false, isItalic: true)
+document.addCharacter("d", fontName: "Times New Roman", fontSize: 14, color: .blue, isBold: false, isItalic: true)
 
-/* Sample Output:
-Memory Impact Report:
-Total variants created: 10000
-Unique color options: 3
-Unique size options: 3
-Total option objects: 6 (vs 20000 without flyweight)
-
-Example Variant:
-SKU: PROD-7823 | Price: $47.42 | Stock: 34
-Color: Blue (#0000FF)
-Size: Large (L)
-*/
+document.display()
+print("Total unique formats created: \(document.totalUniqueFormats())")
 ```
 
-### 🧮 Memory Impact Analysis
+### Key Points:
 
-| Approach          | Option Objects Created | Memory Savings |
-|-------------------|------------------------|----------------|
-| **Without Flyweight** | 20,000 (2 per variant) | Baseline |
-| **With Flyweight** | 6 (3 colors + 3 sizes) | **99.97% reduction** |
+1. **Flyweight (TextFormatting protocol)**: Defines the interface for formatting objects
+2. **Concrete Flyweight (CharacterFormatting)**: Implements the formatting and stores intrinsic state (shared data)
+3. **Flyweight Factory (FormattingFactory)**: Manages and reuses flyweight objects
+4. **Client (Document)**: Maintains references to flyweights and adds extrinsic state (character data)
 
-**Key Savings:**
-1. **Color Options**:  
-   - 10,000 variants → 3 unique color objects
-2. **Size Options**:  
-   - 10,000 variants → 3 unique size objects
+### Benefits:
+- Reduces memory usage by sharing common formatting data
+- Even though we added 11 characters, we only created 3 unique formats (Helvetica bold, Helvetica regular, Times New Roman italic)
+- Easy to maintain consistent formatting across the document
 
-```mermaid
-pie
-    title Memory Usage (Option Objects)
-    "With Flyweight (6)" : 6
-    "Without Flyweight (20,000)" : 20000
-```
+This pattern is especially useful in iOS/macOS apps where you might have many UI elements with similar styling.
 
-### 📱 iOS System Parallels
-1. **`UIColor` System Colors**  
-   ```swift
-   // Shared instances:
-   let red1 = UIColor.systemRed
-   let red2 = UIColor.systemRed  // Same memory address
-   ```
-2. **`UIFont` Text Styles**  
-   ```swift
-   let bodyFont1 = UIFont.preferredFont(forTextStyle: .body)
-   let bodyFont2 = UIFont.preferredFont(forTextStyle: .body)  // Shared
-   ```
-
-### 🚀 Performance Optimization Tips
-1. **Thread-Safe Factory**  
-   ```swift
-   private static let cacheQueue = DispatchQueue(label: "com.options.cache", attributes: .concurrent)
-   
-   static func colorOption(name: String, hex: String) -> ProductOption {
-       cacheQueue.sync(flags: .barrier) {
-           // Cache read/write
-       }
-   }
-   ```
-2. **Cache Invalidation**  
-   ```swift
-   static func clearUnusedOptions() {
-       // LRU cache cleanup
-   }
-   ```
-
-### 💡 When to Use This Pattern
-✅ Product catalogs with 1000+ variants  
-✅ Systems with limited memory (mobile apps)  
-✅ Apps needing real-time inventory updates  
 ---
 
 ## 🔒 Protection Proxy (Structural)
