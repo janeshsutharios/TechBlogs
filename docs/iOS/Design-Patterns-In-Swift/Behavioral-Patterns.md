@@ -890,49 +890,135 @@ Each light represents a state, and each state knows what the next state is. Rath
 
 ### 🧑‍💻 Swift Code Example
 
+The State pattern is excellent for managing complex logic by encapsulating state-specific behavior into separate objects. This approach makes your code more scalable and easier to maintain than using large `switch` statements or conditional `if/else` logic. A classic example for a scalable app is a **document editor**, which can exist in various states like `Draft`, `Moderation`, and `Published`.
+
+### Context and States
+
+First, we need to define the **context**—the object whose behavior changes based on its state. We also need to define the **state protocol** and the **concrete states**.
+
 ```swift
-protocol TrafficLightState {
-    func next(context: TrafficLightContext)
-    var color: String { get }
+// State Protocol
+// This defines the behavior that all concrete states must implement.
+protocol DocumentState: AnyObject {
+    func publish(in context: Document)
+    func approve(in context: Document)
+    func reject(in context: Document)
 }
+```
 
-class RedLight: TrafficLightState {
-    var color: String { "🔴 Red" }
+-----
 
-    func next(context: TrafficLightContext) {
-        context.state = GreenLight()
+### Concrete States
+
+Each state class encapsulates the logic for a specific state. The `publish`, `approve`, and `reject` methods behave differently depending on the current state. The `context` (the `Document` instance) is passed so that the state object can change the document's state.
+
+```swift
+// Draft State
+class DraftState: DocumentState {
+    func publish(in context: Document) {
+        print("Draft is submitted for moderation.")
+        context.state = ModerationState()
+    }
+    
+    func approve(in context: Document) {
+        print("Cannot approve a draft. It must be published first.")
+    }
+    
+    func reject(in context: Document) {
+        print("Cannot reject a draft. It is not yet in moderation.")
     }
 }
 
-class GreenLight: TrafficLightState {
-    var color: String { "🟢 Green" }
-
-    func next(context: TrafficLightContext) {
-        context.state = YellowLight()
+// Moderation State
+class ModerationState: DocumentState {
+    func publish(in context: Document) {
+        print("Cannot publish while in moderation. You must approve it first.")
+    }
+    
+    func approve(in context: Document) {
+        print("Document is approved and published.")
+        context.state = PublishedState()
+    }
+    
+    func reject(in context: Document) {
+        print("Document is rejected and sent back to draft.")
+        context.state = DraftState()
     }
 }
 
-class YellowLight: TrafficLightState {
-    var color: String { "🟡 Yellow" }
-
-    func next(context: TrafficLightContext) {
-        context.state = RedLight()
+// Published State
+class PublishedState: DocumentState {
+    func publish(in context: Document) {
+        print("Document is already published.")
+    }
+    
+    func approve(in context: Document) {
+        print("Document is already published and does not need approval.")
+    }
+    
+    func reject(in context: Document) {
+        print("Cannot reject a published document.")
     }
 }
+```
 
-class TrafficLightContext {
-    var state: TrafficLightState
+-----
 
-    init(initialState: TrafficLightState) {
-        self.state = initialState
+### The Context Object
+
+The `Document` class is the **context**. It holds a reference to the current state and delegates all actions to it. This decouples the document's main logic from the state-specific behavior.
+
+```swift
+class Document {
+    var state: DocumentState
+    
+    init() {
+        self.state = DraftState() // Initial state
     }
-
-    func changeLight() {
-        print("Current Light: \(state.color)")
-        state.next(context: self)
+    
+    func publish() {
+        state.publish(in: self)
+    }
+    
+    func approve() {
+        state.approve(in: self)
+    }
+    
+    func reject() {
+        state.reject(in: self)
     }
 }
-````
+```
+
+### Usage
+
+The client code interacts with the `Document` object without knowing or caring about its internal state machine. The behavior changes automatically based on the current state.
+
+```swift
+let myDocument = Document()
+
+// Initial state: Draft
+print("Current State: \(type(of: myDocument.state))") // Prints "DraftState"
+myDocument.approve() // "Cannot approve a draft..."
+myDocument.publish() // "Draft is submitted for moderation."
+
+// State changed to Moderation
+print("Current State: \(type(of: myDocument.state))") // Prints "ModerationState"
+myDocument.reject() // "Document is rejected..."
+
+// State changed back to Draft
+print("Current State: \(type(of: myDocument.state))") // Prints "DraftState"
+myDocument.publish() // "Draft is submitted for moderation."
+
+// State changed to Moderation
+print("Current State: \(type(of: myDocument.state))") // Prints "ModerationState"
+myDocument.approve() // "Document is approved and published."
+
+// Final State: Published
+print("Current State: \(type(of: myDocument.state))") // Prints "PublishedState"
+myDocument.publish() // "Document is already published."
+```
+
 **iOS and Apple frameworks internally use the State pattern**, especially in scenarios where **an object’s behavior changes based on its current state**. Below are real-world examples:
 
 ---
