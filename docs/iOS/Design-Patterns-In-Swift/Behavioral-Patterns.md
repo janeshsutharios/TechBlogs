@@ -385,19 +385,9 @@ protocol IteratorProtocol {
     mutating func next() -> Element?
 }
 ````
-**Example with Array:**
-```swift
-let foods = ["Pizza", "Sushi", "Burger"]
-var iterator = foods.makeIterator()
-
-while let item = iterator.next() {
-    print(item)
-}
-// Prints: Pizza, Sushi, Burger
-````
-2. Custom Iterator Example
 
 Let's create an iterator for your FoodApp that filters vegetarian items:
+
 ```swift
 struct FoodItem {
     let name: String
