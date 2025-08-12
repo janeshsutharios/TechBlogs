@@ -1,4 +1,4 @@
-# 🧬 Design patterns in swift
+# 🧬 Design Patterns in Swift
 
 | Creational               | Structural               | Behavioral               |
 |--------------------------|--------------------------|---------------------------|
