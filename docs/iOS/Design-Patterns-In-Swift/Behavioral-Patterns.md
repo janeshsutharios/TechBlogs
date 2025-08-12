@@ -555,6 +555,8 @@ tower.register(aircraft: cessna172)
 boeing747.send(message: "Requesting permission to land")
 airbusA380.send(message: "Maintaining current altitude")
 cessna172.send(message: "Beginning approach to runway")
+
+---- Output ----
 Boeing 747 sends: Requesting permission to land
 Airbus A380 receives: Requesting permission to land
 Cessna 172 receives: Requesting permission to land
