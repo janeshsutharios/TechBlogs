@@ -487,180 +487,74 @@ Key Benefits in iOS Development
 ## 📡 Mediator (Behavioral): 
 The Mediator pattern centralizes complex communication between related objects, making them communicate through a single mediator instead of directly. This reduces tight coupling and simplifies maintenance, especially useful in UI frameworks like chat apps or Stock trading app
 
-Example: Stock Trading Platform
-**Overview**
-Implements a stock exchange where:
-- Buyers/Sellers communicate only through the Exchange (mediator)
-- The Exchange handles order matching and trade execution
-- Traders remain completely decoupled
-
-**Components**
-1. `StockExchangeMediator` - Protocol
-2. `NYStockExchange` - Concrete mediator
-3. `Trader` - Abstract colleague
-4. `BuyOrder`/`SellOrder` - Command objects
-
+Example: 
 ```swift
-import Foundation
-
-// MARK: - Mediator Protocol
-protocol StockExchangeMediator {
-    func submitBuyOrder(_ order: BuyOrder)
-    func submitSellOrder(_ order: SellOrder)
-    func registerTrader(_ trader: Trader)
+// Mediator Protocol
+protocol AirTrafficControl {
+    func register(aircraft: Aircraft)
+    func send(message: String, from sender: Aircraft)
 }
 
-// MARK: - Concrete Mediator
-final class NYStockExchange: StockExchangeMediator {
-    private var traders = [String: Trader]()
-    private var buyOrders = [BuyOrder]()
-    private var sellOrders = [SellOrder]()
+// Concrete Mediator
+class ControlTower: AirTrafficControl {
+    private var aircrafts: [Aircraft] = []
     
-    func registerTrader(_ trader: Trader) {
-        traders[trader.id] = trader
-        print("ℹ️ Registered trader: \(trader.name)")
+    func register(aircraft: Aircraft) {
+        aircrafts.append(aircraft)
+        aircraft.controlTower = self
     }
     
-    func submitBuyOrder(_ order: BuyOrder) {
-        buyOrders.append(order)
-        print("📈 Buy order submitted: \(order.quantity) x \(order.stock) @ \(order.price)")
-        tryMatchTrades()
-    }
-    
-    func submitSellOrder(_ order: SellOrder) {
-        sellOrders.append(order)
-        print("📉 Sell order submitted: \(order.quantity) x \(order.stock) @ \(order.price)")
-        tryMatchTrades()
-    }
-    
-    private func tryMatchTrades() {
-        for (i, buyOrder) in buyOrders.enumerated() {
-            for (j, sellOrder) in sellOrders.enumerated() 
-            where buyOrder.stock == sellOrder.stock 
-               && buyOrder.price >= sellOrder.price {
-                
-                let tradePrice = (buyOrder.price + sellOrder.price) / 2
-                let quantity = min(buyOrder.quantity, sellOrder.quantity)
-                
-                print("""
-                🟢 TRADE EXECUTED:
-                   \(quantity) shares of \(buyOrder.stock) @ \(tradePrice)
-                   Buyer: \(buyOrder.traderName)
-                   Seller: \(sellOrder.traderName)
-                """)
-                
-                // Update order quantities
-                buyOrders[i].quantity -= quantity
-                sellOrders[j].quantity -= quantity
-                
-                // Cleanup filled orders
-                if buyOrders[i].quantity == 0 { buyOrders.remove(at: i) }
-                if sellOrders[j].quantity == 0 { sellOrders.remove(at: j) }
-                
-                return
+    func send(message: String, from sender: Aircraft) {
+        for aircraft in aircrafts {
+            // Don't send the message back to the sender
+            if aircraft !== sender {
+                aircraft.receive(message: message)
             }
         }
     }
 }
 
-// MARK: - Colleagues
-class Trader {
-    let id: String
+// Colleague Protocol
+protocol Aircraft: AnyObject {
+    var name: String { get }
+    var controlTower: AirTrafficControl? { get set }
+    func send(message: String)
+    func receive(message: String)
+}
+
+// Concrete Colleagues
+class Airplane: Aircraft {
     let name: String
-    let mediator: StockExchangeMediator
+    weak var controlTower: AirTrafficControl?
     
-    init(id: String, name: String, mediator: StockExchangeMediator) {
-        self.id = id
+    init(name: String) {
         self.name = name
-        self.mediator = mediator
-        mediator.registerTrader(self)
+    }
+    
+    func send(message: String) {
+        print("\(name) sends: \(message)")
+        controlTower?.send(message: message, from: self)
+    }
+    
+    func receive(message: String) {
+        print("\(name) receives: \(message)")
     }
 }
 
-struct BuyOrder {
-    let traderId: String
-    let traderName: String
-    let stock: String
-    var quantity: Int
-    let price: Double
-}
+// Usage
+let tower = ControlTower()
 
-struct SellOrder {
-    let traderId: String
-    let traderName: String
-    let stock: String
-    var quantity: Int
-    let price: Double
-}
+let boeing747 = Airplane(name: "Boeing 747")
+let airbusA380 = Airplane(name: "Airbus A380")
+let cessna172 = Airplane(name: "Cessna 172")
 
-// MARK: - Concrete Traders
-final class InstitutionalTrader: Trader {
-    func placeBuyOrder(stock: String, quantity: Int, price: Double) {
-        let order = BuyOrder(
-            traderId: self.id,
-            traderName: self.name,
-            stock: stock,
-            quantity: quantity,
-            price: price
-        )
-        mediator.submitBuyOrder(order)
-    }
-}
+tower.register(aircraft: boeing747)
+tower.register(aircraft: airbusA380)
+tower.register(aircraft: cessna172)
 
-final class RetailTrader: Trader {
-    func placeSellOrder(stock: String, quantity: Int, price: Double) {
-        let order = SellOrder(
-            traderId: self.id,
-            traderName: self.name,
-            stock: stock,
-            quantity: quantity,
-            price: price
-        )
-        mediator.submitSellOrder(order)
-    }
-}
-
-// MARK: - Usage Example
-func demonstrateStockExchange() {
-    print("\n=== STOCK EXCHANGE DEMO ===")
-    
-    let nyse = NYStockExchange()
-    
-    let hedgeFund = InstitutionalTrader(
-        id: "HF-123", 
-        name: "Quantum Capital", 
-        mediator: nyse
-    )
-    
-    let retailInvestor = RetailTrader(
-        id: "R-456", 
-        name: "Jane Doe", 
-        mediator: nyse
-    )
-    
-    // Place orders
-    hedgeFund.placeBuyOrder(stock: "AAPL", quantity: 1000, price: 175.50)
-    retailInvestor.placeSellOrder(stock: "AAPL", quantity: 500, price: 175.25)
-    
-    // Place another sell order (won't fully match)
-    retailInvestor.placeSellOrder(stock: "AAPL", quantity: 800, price: 176.00)
-}
-
-// Run the demo
-demonstrateStockExchange()
-
-/* Expected Output:
-=== STOCK EXCHANGE DEMO ===
-ℹ️ Registered trader: Quantum Capital
-ℹ️ Registered trader: Jane Doe
-📈 Buy order submitted: 1000 x AAPL @ 175.5
-📉 Sell order submitted: 500 x AAPL @ 175.25
-🟢 TRADE EXECUTED:
-   500 shares of AAPL @ 175.375
-   Buyer: Quantum Capital
-   Seller: Jane Doe
-📉 Sell order submitted: 800 x AAPL @ 176.0
-*/
+boeing747.send(message: "Requesting permission to land")
+airbusA380.send(message: "Maintaining current altitude")
+cessna172.send(message: "Beginning approach to runway")
 ````
 ## 💾 Memento (Behavioral)
 *Captures and externalizes an object's state for later restoration without breaking encapsulation. Enables undo/redo functionality and snapshots.*  
