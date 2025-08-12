@@ -555,7 +555,32 @@ tower.register(aircraft: cessna172)
 boeing747.send(message: "Requesting permission to land")
 airbusA380.send(message: "Maintaining current altitude")
 cessna172.send(message: "Beginning approach to runway")
+Boeing 747 sends: Requesting permission to land
+Airbus A380 receives: Requesting permission to land
+Cessna 172 receives: Requesting permission to land
+
+Airbus A380 sends: Maintaining current altitude
+Boeing 747 receives: Maintaining current altitude
+Cessna 172 receives: Maintaining current altitude
+
+Cessna 172 sends: Beginning approach to runway
+Boeing 747 receives: Beginning approach to runway
+Airbus A380 receives: Beginning approach to runway
 ````
+## Key Points:
+
+1. **Mediator (ControlTower)**: Centralizes communication between Aircraft objects
+2. **Colleagues (Airplanes)**: Communicate only through the mediator, not directly with each other
+3. **Benefits**:
+   - Reduces direct connections between objects
+   - Centralizes control logic
+   - Makes the system easier to maintain and extend
+4. **Swift-specific implementation**:
+   - Using `AnyObject` constraint for reference types
+   - `weak` reference to mediator to avoid retain cycles
+
+This pattern is particularly useful in scenarios where many objects need to communicate in complex ways, such as chat rooms, GUI components, or as shown here, air traffic control systems.
+
 ## 💾 Memento (Behavioral)
 *Captures and externalizes an object's state for later restoration without breaking encapsulation. Enables undo/redo functionality and snapshots.*  
 **Example:** *Text editor undo stack, game save points, or database transactions.*  
