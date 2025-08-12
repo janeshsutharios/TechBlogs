@@ -243,135 +243,115 @@ invoker.undoLastCommand()
 ````
 
 ## 📜 Interpreter (Behavioral)
-The Interpreter Pattern is used to define a grammar for a language and provide an interpreter to evaluate expressions in that language. It's useful for:
+This one’s a bit rarer in day-to-day iOS code, but it’s perfect for situations where you need to **define a grammar and evaluate sentences** in that grammar — like a mini language, filter system, or search query parser.
+---
+* Defines a **grammar** for a simple language.
+* Each **expression** is represented by a class.
+* Expressions can be **terminal** (numbers, words) or **non-terminal** (rules, operators).
+* The **interpret()** method evaluates the expression in a given context.
+---
+### **Example: Simple Math Expression Interpreter**
 
-- Domain-Specific Languages (DSLs) (e.g., SQL, regex)
-- Rule engines (e.g., business rules, pricing rules)
-- Mathematical expressions (e.g., calculators)
-  
-**Real-World Example: Smart Home Automation Language**
-Imagine creating a simple language to control smart home devices:
+We’ll make a very small interpreter that can evaluate
+expressions like:
 
-1. TURN ON LIGHT "Kitchen"
-2. SET THERMOSTAT TO 72
-3. IF TIME > "18:00" THEN TURN ON "Living Room Lights"
+```
+"5 + 3 - 2" → 6
+```
 
-1. Define the Grammar
-Our mini-language has:
-
-    Commands: TURN ON/OFF, SET
-
-    Targets: LIGHT, THERMOSTAT
-
-    Conditions: IF...THEN
+---
 
 ```swift
-// MARK: - Context (Stores variables/state)
-class Context {
-    var variables: [String: Any] = [:]
-    var deviceStatus: [String: Bool] = [:]
-    var thermostatTemp: Int = 68
-}
+import Foundation
 
-// MARK: - Abstract Expression
+// MARK: - Expression Protocol
 protocol Expression {
-    func interpret(context: Context) -> String
+    func interpret() -> Int
 }
 
-// MARK: - Terminal Expressions (Primitive commands)
-final class TurnOnCommand: Expression {
-    private let device: String
-    
-    init(device: String) {
-        self.device = device
+// MARK: - Terminal Expression
+struct NumberExpression: Expression {
+    private let number: Int
+    init(_ number: Int) {
+        self.number = number
     }
-    
-    func interpret(context: Context) -> String {
-        context.deviceStatus[device] = true
-        return "Turned ON \(device)"
+    func interpret() -> Int {
+        return number
     }
 }
 
-final class SetThermostatCommand: Expression {
-    private let temp: Int
+// MARK: - Non-Terminal Expressions
+struct AddExpression: Expression {
+    private let left: Expression
+    private let right: Expression
     
-    init(temp: Int) {
-        self.temp = temp
+    init(_ left: Expression, _ right: Expression) {
+        self.left = left
+        self.right = right
     }
     
-    func interpret(context: Context) -> String {
-        context.thermostatTemp = temp
-        return "Thermostat set to \(temp)°F"
-    }
-}
-
-// MARK: - Non-Terminal Expression (Composite)
-final class IfThenExpression: Expression {
-    private let condition: () -> Bool
-    private let thenExpression: Expression
-    
-    init(condition: @escaping () -> Bool, thenExpression: Expression) {
-        self.condition = condition
-        self.thenExpression = thenExpression
-    }
-    
-    func interpret(context: Context) -> String {
-        if condition() {
-            return thenExpression.interpret(context: context)
-        }
-        return "Condition not met"
+    func interpret() -> Int {
+        return left.interpret() + right.interpret()
     }
 }
 
-// MARK: - Client (Interprets the language)
-class HomeAutomationInterpreter {
-    private var context = Context()
+struct SubtractExpression: Expression {
+    private let left: Expression
+    private let right: Expression
     
-    func interpret(command: String) -> String {
-        let parts = command.components(separatedBy: " ")
+    init(_ left: Expression, _ right: Expression) {
+        self.left = left
+        self.right = right
+    }
+    
+    func interpret() -> Int {
+        return left.interpret() - right.interpret()
+    }
+}
+
+// MARK: - Client Code: Parsing a simple space-separated expression
+func parseExpression(_ input: String) -> Expression {
+    let tokens = input.split(separator: " ").map { String($0) }
+    
+    var currentExpression: Expression = NumberExpression(Int(tokens[0])!)
+    
+    var index = 1
+    while index < tokens.count {
+        let op = tokens[index]
+        let number = NumberExpression(Int(tokens[index + 1])!)
         
-        if command.starts(with: "TURN ON") {
-            let device = parts[2].replacingOccurrences(of: "\"", with: "")
-            return TurnOnCommand(device: device).interpret(context: context)
-        }
-        else if command.starts(with: "SET THERMOSTAT") {
-            let temp = Int(parts[3])!
-            return SetThermostatCommand(temp: temp).interpret(context: context)
-        }
-        else if command.starts(with: "IF") {
-            // Example: "IF TIME > \"18:00\" THEN TURN ON \"Living Room\""
-            let condition = { return true } // Simplified for demo
-            let thenCommand = command.components(separatedBy: "THEN ")[1]
-            let thenExpression = interpret(command: thenCommand)
-            return IfThenExpression(
-                condition: condition,
-                thenExpression: TurnOnCommand(device: "Living Room Lights")
-            ).interpret(context: context)
+        if op == "+" {
+            currentExpression = AddExpression(currentExpression, number)
+        } else if op == "-" {
+            currentExpression = SubtractExpression(currentExpression, number)
         }
         
-        return "Unknown command"
+        index += 2
     }
+    return currentExpression
 }
 
 // MARK: - Usage
-let interpreter = HomeAutomationInterpreter()
+let expression = parseExpression("5 + 3 - 2")
+print("Result: \(expression.interpret())") // Result: 6
+```
 
-print(interpreter.interpret(command: "TURN ON \"Kitchen Light\""))
-// Output: "Turned ON Kitchen Light"
+---
 
-print(interpreter.interpret(command: "SET THERMOSTAT TO 72"))
-// Output: "Thermostat set to 72°F"
+### **💡 Why This Is Interpreter**
 
-print(interpreter.interpret(command: "IF TIME > \"18:00\" THEN TURN ON \"Living Room Lights\""))
-// Output: "Turned ON Living Room Lights" (if condition is true)
-````
-Key Benefits
+* **Grammar**: `"number (+ number | - number)*"`
+* **Terminal expressions**: `NumberExpression`
+* **Non-terminal expressions**: `AddExpression`, `SubtractExpression`
+* **Interpretation context**: The parse function builds an expression tree that can be evaluated.
 
-✅ Extensible Grammar: Easily add new commands (e.g., LOCK DOOR).
+---
 
-✅ Decouples Parsing from Execution: Change interpretation logic without modifying expressions.
+### **iOS Real-World Analogy**
 
-✅ Great for Rule-Based Systems: E.g., pricing engines ("IF customer IS premium THEN APPLY 10% DISCOUNT").
+* Parsing and executing **NSPredicate** filters.
+* Evaluating **format strings** or custom scripting inside your app.
+* Parsing command inputs in a chatbot or developer console.
 
 ### 🔁 Iterator(Behavioral)
 
