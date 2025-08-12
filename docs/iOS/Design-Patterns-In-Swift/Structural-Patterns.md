@@ -183,9 +183,6 @@ oneTime.makePayment(amount: 499.0)
 * `UIView` uses a `CALayer` underneath → a form of **bridge** between visual abstraction and rendering engine.
 * `NSURLSession` is an abstraction that can delegate network behavior to different `URLProtocol` implementations.
 * In SwiftUI, `View` is protocol-based but rendering is handled separately by the system — another subtle bridge.
-
-Got it — here’s your **🌿 Composite Pattern** explanation in clean, GitHub-ready markdown.
-
 ---
 
 ## 🌿 Composite (Structural)
