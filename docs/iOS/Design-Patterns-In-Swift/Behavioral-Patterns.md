@@ -243,13 +243,14 @@ invoker.undoLastCommand()
 ````
 
 ## 📜 Interpreter (Behavioral)
-This one’s a bit rarer in day-to-day iOS code, but it’s perfect for situations where you need to **define a grammar and evaluate sentences** in that grammar — like a mini language, filter system, or search query parser.
----
-* Defines a **grammar** for a simple language.
-* Each **expression** is represented by a class.
-* Expressions can be **terminal** (numbers, words) or **non-terminal** (rules, operators).
-* The **interpret()** method evaluates the expression in a given context.
----
+
+This one’s a bit rarer in day-to-day iOS code, but it’s perfect for situations where you need to **define a grammar and evaluate sentences** in that grammar — like a mini language, filter system, or search query parser
+
+- Defines a **grammar** for a simple language.
+- Each **expression** is represented by a class.
+- Expressions can be **terminal** (numbers, words) or **non-terminal** (rules, operators).
+- The **interpret()** method evaluates the expression in a given context.
+
 ### **Example: Simple Math Expression Interpreter**
 
 We’ll make a very small interpreter that can evaluate
