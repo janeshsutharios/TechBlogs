@@ -1,7 +1,5 @@
 # Design Patterns in Swift
 
-## Table of Contents
-
 | Creational               | Structural               | Behavioral               |
 |--------------------------|--------------------------|---------------------------|
 | [🏗️ Abstract Factory](https://janeshsutharios.github.io/TechBlogs/iOS/Design-Patterns-In-Swift/Creational-Patterns#-abstract-factory-creational) | [🔌 Adapter](https://janeshsutharios.github.io/TechBlogs/iOS/Design-Patterns-In-Swift/Structural-Patterns#-adapter-structural) | [⛓️ Chain Of Responsibility](https://janeshsutharios.github.io/TechBlogs/iOS/Design-Patterns-In-Swift/Behavioral-Patterns#-chain-of-responsibility-behavioral) |
