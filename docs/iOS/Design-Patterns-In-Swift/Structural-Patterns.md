@@ -516,9 +516,6 @@ player.stop()
 * You want flexibility to combine features at runtime.
 * Common in UI modifications, stream processing, logging, and formatting
 ---
-Here’s your **Façade pattern** explanation in the same scalable app style you liked:
-
----
 
 ## 🏛️ Façade (Structural)
 
@@ -850,9 +847,6 @@ guestUser.updateSystemConfig()  // ❌ Denied
 * Restrict certain features based on **user roles** (admin, premium, guest).
 * Prevent **unauthorized API calls** from the client side.
 * Control access to **sensitive resources** (keychain, files, settings).
-
----
-Here’s your **README-style** explanation for **👻 Virtual Proxy** with an **iOS-friendly example** that compiles.
 
 ---
 
