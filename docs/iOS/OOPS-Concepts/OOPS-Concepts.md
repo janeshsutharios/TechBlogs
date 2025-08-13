@@ -329,6 +329,39 @@ print(calc.add(first: 10, second: 20))  // 30
 - **Readability**: Keeps your code clean and intuitive.
 - **Scalability**: Easily extend functionality as your app grows.
 
+### ❌ Method Overloading Based on Return Type
+
+Swift **does not allow** method overloading based *only* on return type when the parameter list is identical. If you define two functions like:
+
+```swift
+func getValue() -> Int {
+    return 10
+}
+
+func getValue() -> String {
+    return "Hello"
+}
+```
+
+This will **compile successfully** only if the **context clearly specifies** which return type is expected:
+
+```swift
+let intValue: Int = getValue()     // ✅ Swift knows to call the Int version
+let stringValue: String = getValue() // ✅ Swift knows to call the String version
+```
+
+However, if you write:
+
+```swift
+let value = getValue() // ❌ Error: Ambiguous use of 'getValue'
+```
+
+Swift will throw a **compile-time error** because it cannot infer which version to use.
+
+---
+
+### 💡 Tip:
+To avoid ambiguity, always provide **explicit type annotations** when overloading methods by return type.
 
 
 
@@ -336,7 +369,7 @@ print(calc.add(first: 10, second: 20))  // 30
 
 
 
-## 🧩 Summary of OOP Concepts
+
 
 ## 🧩 Summary of OOP Concepts
 
@@ -365,8 +398,5 @@ Swift does **not** support multiple inheritance with classes. You can only inher
 
 ### ❌ Abstract Classes
 Swift does **not** have a direct concept of abstract classes. You can use protocols to define abstract behavior.
-
-### ❌ Method Overloading Based on Return Type
-Swift does **not** allow method overloading based solely on return type.
 
 ---
