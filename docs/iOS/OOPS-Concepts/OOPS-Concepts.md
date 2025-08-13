@@ -217,7 +217,61 @@ Processing ₹500.0 via Net Banking
 - The `processPayment()` method is called polymorphically — the correct implementation is chosen at runtime based on the object type.
 - This makes the system **extensible** — you can add new payment types without changing existing code.
 
+---
+Here’s a clear and blog-friendly explanation of **Abstraction** in Swift, with a relatable example:
 
+---
+
+## 🧠 5. Abstraction in Swift
+
+> **Abstraction** is the OOP principle of hiding complex implementation details and exposing only the essential features through a simplified interface. In Swift, abstraction is commonly achieved using **protocols**, which define a blueprint of methods and properties without specifying how they’re implemented.
+
+---
+
+### 🧪 Example: Payment Abstraction
+
+```swift
+protocol PaymentMethod {
+    func processPayment(amount: Double)
+}
+
+class UPIPayment: PaymentMethod {
+    func processPayment(amount: Double) {
+        // UPI-specific logic
+        print("Paid ₹\(amount) using UPI")
+    }
+}
+
+class CreditCardPayment: PaymentMethod {
+    func processPayment(amount: Double) {
+        // Credit card-specific logic
+        print("Paid ₹\(amount) using Credit Card")
+    }
+}
+```
+
+### 🧾 Usage
+
+```swift
+func makePayment(using method: PaymentMethod, amount: Double) {
+    method.processPayment(amount: amount)
+}
+
+let payment = UPIPayment()
+makePayment(using: payment, amount: 750.0)
+```
+
+### ✅ Output:
+```
+Paid ₹750.0 using UPI
+```
+
+---
+
+### 💡 Explanation:
+- The `PaymentMethod` protocol defines the **abstract behavior**.
+- Concrete classes (`UPIPayment`, `CreditCardPayment`) implement the behavior in their own way.
+- The caller (`makePayment`) doesn’t need to know how the payment is processed — it just uses the abstract interface.
 
 ---
 
