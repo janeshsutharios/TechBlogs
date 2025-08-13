@@ -527,10 +527,83 @@ This technique is especially useful for:
 
 ---
 
+## 9. 🧱 Abstract Classes
 
+In Swift, the concept of an **abstract class**—a class that cannot be instantiated and is meant to be subclassed—is **not directly supported** like in some other languages (e.g., Java or C++). However, you can **simulate abstract behavior** using a combination of **protocols** and **fatalError()** in base classes.
+Swift does **not** have a direct concept of abstract classes. You can use protocols to define abstract behavior.
 
+---
 
+## 🧱 Simulating Abstract Classes in Swift
 
+### ✅ Using Protocols
+
+Protocols define a blueprint of methods, properties, and other requirements. You can use them to enforce that subclasses implement certain behavior.
+
+```swift
+protocol Shape {
+    func area() -> Double
+}
+```
+
+### ✅ Using Base Class with `fatalError()`
+
+You can create a base class that includes methods meant to be overridden. If they aren’t, calling them will crash the app—simulating abstract behavior.
+
+```swift
+class AbstractShape {
+    func area() -> Double {
+        fatalError("Subclasses must override area()")
+    }
+}
+```
+
+### 🧩 Subclass Example
+
+```swift
+class Circle: AbstractShape {
+    var radius: Double
+
+    init(radius: Double) {
+        self.radius = radius
+    }
+
+    override func area() -> Double {
+        return Double.pi * radius * radius
+    }
+}
+```
+
+### 🚫 Prevent Instantiation (Optional)
+
+You can make the initializer `private` or `internal` to discourage direct instantiation:
+
+```swift
+class AbstractShape {
+    init() {
+        if type(of: self) == AbstractShape.self {
+            fatalError("AbstractShape cannot be instantiated directly")
+        }
+    }
+
+    func area() -> Double {
+        fatalError("Subclasses must override area()")
+    }
+}
+```
+
+---
+
+## 🧠 Summary
+
+| Feature | Swift Support |
+|--------|----------------|
+| Abstract Class | ❌ Not directly supported |
+| Protocols | ✅ Preferred way to enforce behavior |
+| `fatalError()` | ✅ Used to simulate abstract methods |
+| Prevent Instantiation | ✅ Via initializer logic |
+
+---
 
 
 
@@ -559,9 +632,3 @@ This technique is especially useful for:
 
 ---
 
-While Swift is OOP-friendly, there are a few limitations:
-
-### ❌ Abstract Classes
-Swift does **not** have a direct concept of abstract classes. You can use protocols to define abstract behavior.
-
----
