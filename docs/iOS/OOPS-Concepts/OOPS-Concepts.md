@@ -127,7 +127,7 @@ myDog.fetch()   // Buddy is fetching the ball
 
 ---
 
-## 🧭 Real-World Example: ViewController Inheritance
+### 🧭 Real-World Example: ViewController Inheritance
 
 > In iOS development, every custom screen or view is typically a subclass of `UIViewController`. This is a classic example of inheritance, where your custom controller inherits built-in functionality like view lifecycle methods (`viewDidLoad`, `viewWillAppear`, etc.) from `UIViewController`.
 
