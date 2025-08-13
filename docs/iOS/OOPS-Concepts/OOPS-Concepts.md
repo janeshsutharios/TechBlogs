@@ -78,3 +78,77 @@ Here’s a clean and informative table you can include in your blog to explain *
 - Use `private` or `fileprivate` to enforce **encapsulation**.
 - Use `internal` for most app code.
 - Use `public` or `open` when building **reusable frameworks**.
+
+Here’s a blog-friendly explanation of **Inheritance** in Swift, complete with a simple example:
+
+---
+Here’s a blog-friendly explanation of **Inheritance** in Swift, complete with a simple example:
+
+---
+
+## 🧬 3. Inheritance in Swift
+
+> **Inheritance** is an OOP concept where one class (called a *subclass*) inherits properties and methods from another class (called a *superclass*). Swift supports **single inheritance**, allowing you to reuse and extend existing functionality.
+
+### 🐾 Example: Animal → Dog
+
+```swift
+class Animal {
+    var name: String
+
+    init(name: String) {
+        self.name = name
+    }
+
+    func speak() {
+        print("\(name) makes a sound")
+    }
+}
+
+class Dog: Animal {
+    func fetch() {
+        print("\(name) is fetching the ball")
+    }
+
+    override func speak() {
+        print("\(name) barks")
+    }
+}
+
+let myDog = Dog(name: "Buddy")
+myDog.speak()   // Buddy barks
+myDog.fetch()   // Buddy is fetching the ball
+```
+
+### 💡 Explanation:
+- `Dog` inherits from `Animal`, gaining access to its `name` property and `speak()` method.
+- `Dog` overrides `speak()` to provide its own behavior.
+- It also adds a new method `fetch()`.
+
+---
+
+## 🧭 Real-World Example: ViewController Inheritance
+
+> In iOS development, every custom screen or view is typically a subclass of `UIViewController`. This is a classic example of inheritance, where your custom controller inherits built-in functionality like view lifecycle methods (`viewDidLoad`, `viewWillAppear`, etc.) from `UIViewController`.
+
+### 📱 Example: Custom ViewController
+
+```swift
+import UIKit
+
+class WelcomeViewController: UIViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        print("Welcome screen loaded")
+    }
+}
+```
+
+### 💡 Explanation:
+- `WelcomeViewController` inherits from `UIViewController`.
+- It overrides `viewDidLoad()` to customize behavior when the view loads.
+- You get access to all the built-in methods and properties of `UIViewController` without writing them from scratch.
+
+---
