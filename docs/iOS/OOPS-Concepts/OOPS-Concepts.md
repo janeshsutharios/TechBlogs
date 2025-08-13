@@ -561,9 +561,6 @@ This technique is especially useful for:
 
 While Swift is OOP-friendly, there are a few limitations:
 
-### ❌ Multiple Inheritance
-Swift does **not** support multiple inheritance with classes. You can only inherit from one class. However, you can use **protocols** to simulate multiple inheritance.
-
 ### ❌ Abstract Classes
 Swift does **not** have a direct concept of abstract classes. You can use protocols to define abstract behavior.
 
