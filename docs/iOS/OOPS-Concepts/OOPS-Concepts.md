@@ -22,11 +22,9 @@ class Student {
 let student1 = Student(name: "Aarav", age: 14, grade: "8th")
 student1.displayInfo()
 ````
-Here’s a clear and blog-friendly explanation of **Encapsulation** in Swift, along with an example:
-
 ---
 
-## 2. 🔐 Encapsulation in Swift
+## 2. 🔐 Encapsulation
 
 > **Encapsulation** is the OOP principle of hiding internal object details and exposing only what’s necessary. In Swift, this is achieved using access control keywords like `private`, `internal`, and `public`, which help protect data and maintain clean interfaces.
 
@@ -78,15 +76,9 @@ Here’s a clean and informative table you can include in your blog to explain *
 - Use `private` or `fileprivate` to enforce **encapsulation**.
 - Use `internal` for most app code.
 - Use `public` or `open` when building **reusable frameworks**.
-
-Here’s a blog-friendly explanation of **Inheritance** in Swift, complete with a simple example:
-
----
-Here’s a blog-friendly explanation of **Inheritance** in Swift, complete with a simple example:
-
 ---
 
-## 🧬 3. Inheritance in Swift
+## 🧬 3. Inheritance
 
 > **Inheritance** is an OOP concept where one class (called a *subclass*) inherits properties and methods from another class (called a *superclass*). Swift supports **single inheritance**, allowing you to reuse and extend existing functionality.
 
@@ -156,7 +148,7 @@ class WelcomeViewController: UIViewController {
 Perfect choice, Janesh! Here's a blog-ready explanation of **Polymorphism** using a **Payment Gateway** example — something readers can easily relate to in real-world app development.
 
 ---
-## 🔄 4. Polymorphism in Swift
+## 🔄 4. Polymorphism
 > Polymorphism allows objects of different classes to be treated as objects of a common superclass or protocol. It enables a single interface to represent different underlying forms (types), making code more flexible and extensible.
 
 ### 💳 Polymorphism in a Payment Gateway System
@@ -218,11 +210,8 @@ Processing ₹500.0 via Net Banking
 - This makes the system **extensible** — you can add new payment types without changing existing code.
 
 ---
-Here’s a clear and blog-friendly explanation of **Abstraction** in Swift, with a relatable example:
 
----
-
-## 🧠 5. Abstraction in Swift
+## 🧠 5. Abstraction
 
 > **Abstraction** is the OOP principle of hiding complex implementation details and exposing only the essential features through a simplified interface. In Swift, abstraction is commonly achieved using **protocols**, which define a blueprint of methods and properties without specifying how they’re implemented.
 
@@ -270,7 +259,7 @@ Paid ₹750.0 using UPI
 
 ---
 
-## 🧠 Abstraction vs 🔐 Encapsulation in Swift
+## 🧠 Abstraction vs 🔐 Encapsulation
 
 | Feature         | **Abstraction**                                           | **Encapsulation**                                       |
 |----------------|-----------------------------------------------------------|----------------------------------------------------------|
@@ -287,10 +276,10 @@ Paid ₹750.0 using UPI
 - **Encapsulation** is like the **plastic casing** around the remote — it protects the internal parts from being tampered with.
 
 ---
-Here’s a clean and informative **summary table** of all five core **Object-Oriented Programming (OOP) concepts** in Swift — perfect for your tech blog:
+Here’s a clean and informative **summary table** of all five core **Object-Oriented Programming (OOP) concepts**
 ---
 
-## 🧩 Summary of OOP Concepts in Swift
+## 🧩 Summary of OOP Concepts
 
 | Concept         | Description                                                                 | Swift Feature Used         | Real-World Example                          | Emoji |
 |----------------|-----------------------------------------------------------------------------|----------------------------|---------------------------------------------|-------|
