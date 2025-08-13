@@ -266,7 +266,23 @@ makePayment(using: payment, amount: 750.0)
 Paid ₹750.0 using UPI
 ```
 
+
+Here’s a clean and informative **summary table** of all five core **Object-Oriented Programming (OOP) concepts** in Swift — perfect for your tech blog:
+
 ---
+
+## 🧩 Summary of OOP Concepts in Swift
+
+| Concept         | Description                                                                 | Swift Feature Used         | Real-World Example                          | Emoji |
+|----------------|-----------------------------------------------------------------------------|----------------------------|---------------------------------------------|-------|
+| **Classes & Objects** | Blueprint and instance representing data and behavior                     | `class`, `init`, properties, methods | `Student`, `Car`, `UIViewController`         | 🧱📦 |
+| **Encapsulation**     | Hiding internal details and exposing only necessary parts                | `private`, `fileprivate`, `public`   | `BankAccount` with hidden balance            | 🔐📦 |
+| **Inheritance**       | Reusing and extending functionality from a parent class                  | `class`, `super`, `override`         | `Dog` inherits from `Animal`, `UIViewController` | 🧬📱 |
+| **Polymorphism**      | One interface, many implementations                                      | `override`, `protocol`, dynamic dispatch | `Shape` drawing, `PaymentMethod` handling    | 🔄💳 |
+| **Abstraction**       | Hiding complexity behind a simplified interface                          | `protocol`                             | `PaymentMethod` protocol with multiple types | 🧠💡 |
+
+---
+
 
 ### 💡 Explanation:
 - The `PaymentMethod` protocol defines the **abstract behavior**.
