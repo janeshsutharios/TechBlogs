@@ -429,6 +429,114 @@ class Animal {
 ```
 
 ---
+## 8. 🔄 Multiple Inheritance?
+In Swift, **Multiple Inheritance** as seen in some other languages like C++ is **not directly supported** for classes. Swift uses **single inheritance** for classes, meaning a class can inherit from only **one superclass**.
+
+However, Swift provides a powerful alternative using **protocols**, which allows you to achieve similar behavior.
+
+---
+
+## 🔄 What is Multiple Inheritance?
+
+In traditional OOP languages, **multiple inheritance** allows a class to inherit features (methods and properties) from **more than one superclass**.
+
+### ❌ Not Supported in Swift for Classes
+
+```swift
+class A { }
+class B { }
+
+class C: A, B { } // ❌ Error: Swift does not support multiple class inheritance
+```
+
+---
+
+## ✅ Achieving Multiple Inheritance via Protocols
+
+Swift allows a class or struct to conform to **multiple protocols**, which is a flexible and safe way to simulate multiple inheritance.
+
+### 🧩 Example
+
+```swift
+protocol Flyable {
+    func fly()
+}
+
+protocol Swimmable {
+    func swim()
+}
+
+class Duck: Flyable, Swimmable {
+    func fly() {
+        print("Duck is flying")
+    }
+
+    func swim() {
+        print("Duck is swimming")
+    }
+}
+```
+
+Here, `Duck` conforms to both `Flyable` and `Swimmable`, effectively inheriting behavior from multiple sources.
+
+---
+
+## 🧠 Why Swift Avoids Multiple Class Inheritance?
+
+- **Avoids ambiguity** (e.g., diamond problem)
+- **Simplifies the class hierarchy**
+- **Encourages composition and protocol-oriented design**
+
+---
+
+## 🧪 Best Practice
+
+Use **protocols + composition** to build flexible and reusable components instead of relying on multiple inheritance.
+
+---
+
+### 🧙‍♂️ Provide Default Implementations (Optional but Powerful)
+
+Swift protocols can include **default implementations** of their requirements using **extensions**. This allows types conforming to the protocol to "inherit" behavior without needing a class hierarchy.
+
+#### ✅ Example
+
+```swift
+protocol Greetable {
+    func greet()
+}
+
+extension Greetable {
+    func greet() {
+        print("Hello from default implementation!")
+    }
+}
+
+class Person: Greetable {
+    // No need to implement `greet` unless custom behavior is needed
+}
+
+let user = Person()
+user.greet()  // Output: Hello from default implementation!
+```
+
+This technique is especially useful for:
+- Reducing boilerplate code
+- Sharing common behavior across multiple types
+- Building scalable and modular systems
+
+---
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## 🧩 Summary of OOP Concepts
