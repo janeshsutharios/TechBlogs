@@ -56,9 +56,6 @@ Current Balance: ₹1000.0
 ### 💡 Explanation:
 - The `balance` property is marked `private`, so it can't be accessed directly from outside the class.
 - Only controlled access is provided through `deposit()` and `getBalance()` methods.
-Here’s a clean and informative table you can include in your blog to explain **Swift’s access control levels**:
-
----
 
 ### 🔐 Swift Access Specifiers Table
 
