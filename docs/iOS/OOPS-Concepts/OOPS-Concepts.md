@@ -217,4 +217,19 @@ Processing ₹500.0 via Net Banking
 - The `processPayment()` method is called polymorphically — the correct implementation is chosen at runtime based on the object type.
 - This makes the system **extensible** — you can add new payment types without changing existing code.
 
+
+
+---
+
+While Swift is OOP-friendly, there are a few limitations:
+
+### ❌ Multiple Inheritance
+Swift does **not** support multiple inheritance with classes. You can only inherit from one class. However, you can use **protocols** to simulate multiple inheritance.
+
+### ❌ Abstract Classes
+Swift does **not** have a direct concept of abstract classes. You can use protocols to define abstract behavior.
+
+### ❌ Method Overloading Based on Return Type
+Swift does **not** allow method overloading based solely on return type.
+
 ---
