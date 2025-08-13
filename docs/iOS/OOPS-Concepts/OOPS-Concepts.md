@@ -152,3 +152,69 @@ class WelcomeViewController: UIViewController {
 - You get access to all the built-in methods and properties of `UIViewController` without writing them from scratch.
 
 ---
+
+Perfect choice, Janesh! Here's a blog-ready explanation of **Polymorphism** using a **Payment Gateway** example — something readers can easily relate to in real-world app development.
+
+---
+## 🔄 4. Polymorphism in Swift
+> Polymorphism allows objects of different classes to be treated as objects of a common superclass or protocol. It enables a single interface to represent different underlying forms (types), making code more flexible and extensible.
+
+### 💳 Polymorphism in a Payment Gateway System
+
+> In a payment gateway, different payment methods (like UPI, Credit Card, Net Banking) can be handled using a common interface. This is a classic use of **polymorphism**, where each payment type behaves differently but is accessed through the same protocol or superclass.
+
+### 🧪 Example: Payment Protocol
+
+```swift
+protocol PaymentMethod {
+    func processPayment(amount: Double)
+}
+
+class CreditCardPayment: PaymentMethod {
+    func processPayment(amount: Double) {
+        print("Processing ₹\(amount) via Credit Card")
+    }
+}
+
+class UPIPayment: PaymentMethod {
+    func processPayment(amount: Double) {
+        print("Processing ₹\(amount) via UPI")
+    }
+}
+
+class NetBankingPayment: PaymentMethod {
+    func processPayment(amount: Double) {
+        print("Processing ₹\(amount) via Net Banking")
+    }
+}
+```
+
+### 🧾 Usage
+
+```swift
+let payments: [PaymentMethod] = [
+    CreditCardPayment(),
+    UPIPayment(),
+    NetBankingPayment()
+]
+
+for payment in payments {
+    payment.processPayment(amount: 500.0)
+}
+```
+
+### ✅ Output:
+```
+Processing ₹500.0 via Credit Card  
+Processing ₹500.0 via UPI  
+Processing ₹500.0 via Net Banking
+```
+
+---
+
+### 💡 Explanation:
+- All payment classes conform to the `PaymentMethod` protocol.
+- The `processPayment()` method is called polymorphically — the correct implementation is chosen at runtime based on the object type.
+- This makes the system **extensible** — you can add new payment types without changing existing code.
+
+---
