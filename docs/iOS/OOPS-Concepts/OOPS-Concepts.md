@@ -275,14 +275,23 @@ Paid ₹750.0 using UPI
 
 ## 🧩 Summary of OOP Concepts
 
-| Concept         | Description                                                                 | Swift Feature Used         | Real-World Example                          | Emoji |
-|----------------|-----------------------------------------------------------------------------|----------------------------|---------------------------------------------|-------|
-| **Classes & Objects** | Blueprint and instance representing data and behavior                     | `class`, `init`, properties, methods | `Student`, `Car`, `UIViewController`         | 🧱📦 |
-| **Encapsulation**     | Hiding internal details and exposing only necessary parts                | `private`, `fileprivate`, `public`   | `BankAccount` with hidden balance            | 🔐📦 |
-| **Inheritance**       | Reusing and extending functionality from a parent class                  | `class`, `super`, `override`         | `Dog` inherits from `Animal`, `UIViewController` | 🧬📱 |
-| **Polymorphism**      | One interface, many implementations                                      | `override`, `protocol`, dynamic dispatch | `Shape` drawing, `PaymentMethod` handling    | 🔄💳 |
-| **Abstraction**       | Hiding complexity behind a simplified interface                          | `protocol`                             | `PaymentMethod` protocol with multiple types | 🧠💡 |
+Absolutely, Janesh! Here's your updated summary table with emojis moved to the **Concept** column and the last column removed — perfect for your blog:
 
+---
+
+## 🧩 Summary of OOP Concepts
+
+| Concept 🧩         | Description                                                                 | Swift Feature Used         | Real-World Example                          |
+|-------------------|-----------------------------------------------------------------------------|----------------------------|---------------------------------------------|
+| **🧱📦 Classes & Objects** | Blueprint and instance representing data and behavior                     | `class`, `init`, properties, methods | `Student`, `Car`, `UIViewController`         |
+| **🔐📦 Encapsulation**     | Hiding internal details and exposing only necessary parts                | `private`, `fileprivate`, `public`   | `BankAccount` with hidden balance            |
+| **🧬📱 Inheritance**       | Reusing and extending functionality from a parent class                  | `class`, `super`, `override`         | `Dog` inherits from `Animal`, `UIViewController` |
+| **🔄💳 Polymorphism**      | One interface, many implementations                                      | `override`, `protocol`, dynamic dispatch | `Shape` drawing, `PaymentMethod` handling    |
+| **🧠💡 Abstraction**       | Hiding complexity behind a simplified interface                          | `protocol`                             | `PaymentMethod` protocol with multiple types |
+
+---
+
+Would you like this exported as a **Markdown**, **HTML**, or **PDF** file for your blog? I can also generate a visual infographic version if you'd like!
 ---
 
 
