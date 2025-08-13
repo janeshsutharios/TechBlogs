@@ -1,4 +1,4 @@
-## 1. Classes and Objects
+## 1. 🧱 Classes and Objects
 A class is a blueprint for creating objects that encapsulate data and behavior. An object is an instance of a class, representing a specific entity with its own values and functionality. This approach helps organize code in a modular, reusable, and scalable way.
 
 ```swift
