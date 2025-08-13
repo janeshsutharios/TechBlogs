@@ -363,12 +363,72 @@ Swift will throw a **compile-time error** because it cannot infer which version 
 ### 💡 Tip:
 To avoid ambiguity, always provide **explicit type annotations** when overloading methods by return type.
 
+---
 
+## 🔄 7. Method Overriding in Swift
 
+**Method overriding** is a fundamental concept in **object-oriented programming (OOP)** that allows a subclass to provide a specific implementation of a method that is already defined in its superclass.
 
+### 🧠 Why Override a Method?
 
+You override methods to:
+- Customize or extend the behavior of a superclass method.
+- Implement polymorphism, allowing different classes to respond differently to the same method call.
 
+### 🛠️ How to Override a Method in Swift
 
+In Swift, you use the `override` keyword to indicate that you're providing a new implementation of a method inherited from a superclass.
+
+### ✅ Syntax Example
+
+```swift
+class Animal {
+    func makeSound() {
+        print("Some generic animal sound")
+    }
+}
+
+class Dog: Animal {
+    override func makeSound() {
+        print("Woof!")
+    }
+}
+
+let myDog = Dog()
+myDog.makeSound()  // Output: Woof!
+```
+
+### 🔐 Rules of Method Overriding
+
+1. The method must be **inherited** from a superclass.
+2. You must use the `override` keyword.
+3. The overridden method must match the **signature** (name, parameters, return type) of the superclass method.
+4. You can call the superclass method using `super.methodName()` if needed.
+
+### 🧩 Overriding with `super`
+
+```swift
+class Bird: Animal {
+    override func makeSound() {
+        super.makeSound()  // Calls Animal's makeSound
+        print("Tweet!")
+    }
+}
+```
+
+### 🚫 Preventing Overriding
+
+If you want to **prevent** a method from being overridden, use the `final` keyword:
+
+```swift
+class Animal {
+    final func makeSound() {
+        print("This sound cannot be overridden")
+    }
+}
+```
+
+---
 
 
 ## 🧩 Summary of OOP Concepts
