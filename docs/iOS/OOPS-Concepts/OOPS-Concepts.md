@@ -265,10 +265,29 @@ makePayment(using: payment, amount: 750.0)
 ```
 Paid ₹750.0 using UPI
 ```
+ **Abstraction** VS **Encapsulation**
+ **Abstraction** and **Encapsulation** are closely related but serve different purposes in object-oriented programming. Here's a clear comparison to help your blog readers understand the difference:
 
+---
 
+## 🧠 Abstraction vs 🔐 Encapsulation in Swift
+
+| Feature         | **Abstraction**                                           | **Encapsulation**                                       |
+|----------------|-----------------------------------------------------------|----------------------------------------------------------|
+| **Purpose**     | Hides *implementation complexity*                        | Hides *internal data* from outside access                |
+| **Focus**       | Focuses on *what* an object does                         | Focuses on *how* an object protects its data             |
+| **Achieved Using** | `protocols`, abstract interfaces                        | Access modifiers like `private`, `fileprivate`, etc.     |
+| **Example**     | `PaymentMethod` protocol with `processPayment()` method | `BankAccount` class with private `balance` property      |
+| **Benefit**     | Simplifies usage and promotes flexibility                | Secures data and maintains integrity                     |
+
+---
+
+### 🔍 Quick Analogy:
+- **Abstraction** is like using a **remote control** — you press buttons without knowing the internal electronics.
+- **Encapsulation** is like the **plastic casing** around the remote — it protects the internal parts from being tampered with.
+
+---
 Here’s a clean and informative **summary table** of all five core **Object-Oriented Programming (OOP) concepts** in Swift — perfect for your tech blog:
-
 ---
 
 ## 🧩 Summary of OOP Concepts in Swift
