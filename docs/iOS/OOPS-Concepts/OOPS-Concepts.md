@@ -338,10 +338,6 @@ print(calc.add(first: 10, second: 20))  // 30
 
 ## 🧩 Summary of OOP Concepts
 
-Absolutely, Janesh! Here's your updated summary table with emojis moved to the **Concept** column and the last column removed — perfect for your blog:
-
----
-
 ## 🧩 Summary of OOP Concepts
 
 | Concept 🧩         | Description                                                                 | Swift Feature Used         | Real-World Example                          |
@@ -352,9 +348,6 @@ Absolutely, Janesh! Here's your updated summary table with emojis moved to the *
 | **🔄💳 Polymorphism**      | One interface, many implementations                                      | `override`, `protocol`, dynamic dispatch | `Shape` drawing, `PaymentMethod` handling    |
 | **🧠💡 Abstraction**       | Hiding complexity behind a simplified interface                          | `protocol`                             | `PaymentMethod` protocol with multiple types |
 
----
-
-Would you like this exported as a **Markdown**, **HTML**, or **PDF** file for your blog? I can also generate a visual infographic version if you'd like!
 ---
 
 
