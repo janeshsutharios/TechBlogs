@@ -273,6 +273,69 @@ Paid ₹750.0 using UPI
 - **Encapsulation** is like the **plastic casing** around the remote — it protects the internal parts from being tampered with.
 
 
+Great choice, Janesh! Here's a blog-ready section on **Method Overloading in Swift**, using a **Calculator App** as a real-world example:
+
+---
+
+## 🧮 6. Method Overloading in Swift: 
+
+> **Method Overloading** allows you to define multiple methods with the same name but different parameters. In a calculator app, this is especially useful for handling different types of inputs like integers, doubles, or multiple operands.
+
+---
+
+### 🧪 Calculator App Example
+
+```swift
+class Calculator {
+    
+    // Overload for two integers
+    func add(a: Int, b: Int) -> Int {
+        return a + b
+    }
+
+    // Overload for two doubles
+    func add(a: Double, b: Double) -> Double {
+        return a + b
+    }
+
+    // Overload for three integers
+    func add(a: Int, b: Int, c: Int) -> Int {
+        return a + b + c
+    }
+
+    // Overload with argument labels
+    func add(first a: Int, second b: Int) -> Int {
+        return a + b
+    }
+}
+```
+
+### 🧾 Usage
+
+```swift
+let calc = Calculator()
+
+print(calc.add(a: 2, b: 3))             // 5
+print(calc.add(a: 2.5, b: 3.5))         // 6.0
+print(calc.add(a: 1, b: 2, c: 3))       // 6
+print(calc.add(first: 10, second: 20))  // 30
+```
+
+---
+
+### 💡 Why It Matters
+
+- **Flexibility**: You can handle different types and numbers of inputs without changing method names.
+- **Readability**: Keeps your code clean and intuitive.
+- **Scalability**: Easily extend functionality as your app grows.
+
+
+
+
+
+
+
+
 ## 🧩 Summary of OOP Concepts
 
 Absolutely, Janesh! Here's your updated summary table with emojis moved to the **Concept** column and the last column removed — perfect for your blog:
