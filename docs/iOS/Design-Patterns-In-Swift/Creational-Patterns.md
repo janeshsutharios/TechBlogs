@@ -639,8 +639,9 @@ Task {
     await Singleton.shared.setData("NewValue")  // Thread-safe
     let data = await Singleton.shared.getData()
 }
-// Note -> We can also create singleton as - `final class MySingleton : Sendable {`
 ````
+Note -> We can also create singleton as - `final class MySingleton : Sendable {`
+
 🔐 Why Use `private init()?`
 To prevent accidental instantiation from other parts of the code:
 Use final to prevent subclassing	Avoid overusing singletons
