@@ -272,9 +272,6 @@ Paid ₹750.0 using UPI
 - **Abstraction** is like using a **remote control** — you press buttons without knowing the internal electronics.
 - **Encapsulation** is like the **plastic casing** around the remote — it protects the internal parts from being tampered with.
 
----
-Here’s a clean and informative **summary table** of all five core **Object-Oriented Programming (OOP) concepts**
----
 
 ## 🧩 Summary of OOP Concepts
 
