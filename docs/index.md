@@ -4,4 +4,4 @@ Welcome! Browse my articles:
 
 - [🧠 Design Patterns in Swift](https://janeshsutharios.github.io/TechBlogs/iOS/Design-Patterns-In-Swift)
 - [🎨 OOPS with Swift](https://janeshsutharios.github.io/TechBlogs/iOS/OOPS-Concepts/OOPS-Concepts)
-- [⛩️ POP with Swift]([https://github.com/janeshsutharios/TechBlogs/blob/main/docs/iOS/](https://janeshsutharios.github.io/TechBlogs/iOS/)OOPS-Concepts/POP-Conccepts)
+- [⛩️ POP with Swift]([https://janeshsutharios.github.io/TechBlogs/iOS/OOPS-Concepts/POP-Conccepts)
