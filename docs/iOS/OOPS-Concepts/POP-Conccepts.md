@@ -1,7 +1,9 @@
-## Swift is often described as a Protocol-Oriented Programming (POP) language. This means Swift emphasizes the use of protocols as a fundamental way to structure and organize code, promoting flexibility and reusability. While Swift also supports object-oriented programming (OOP), POP is a core part of its design philosophy
+### Swift is often described as a Protocol-Oriented Programming (POP) language. 
+This means Swift emphasizes the use of protocols as a fundamental way to structure and organize code, promoting flexibility and reusability.
+While Swift also supports object-oriented programming (OOP), POP is a core part of its design philosophy
+
 Here's a **comprehensive set of practical examples** demonstrating all key use cases for protocols in Swift, with complete implementations:
 
-## Here some example by usin protocols
 ### **1. Heterogeneous Collections (Payment System)**
 ```swift
 protocol PaymentMethod {
