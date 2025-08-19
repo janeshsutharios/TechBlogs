@@ -5,6 +5,7 @@ categories: ['coderedablility', 'ios', 'iOS', 'Markdown', 'markup', 'Swift', 'sw
 layout: post
 ---
 
+
 <!-- wp:paragraph -->
 We can write code annotation so that when we see the Minimap, it will list out functions & vars of the project in sectioned manner. This will speedup to jump the desired piece of code.<br>At Minimum we can apply the <strong>// MARK:  -- ViewLifeCycle</strong> It will look like below image
 
