@@ -33,16 +33,20 @@ student1.displayInfo()
 ```swift
 class BankAccount {
     private var balance: Double = 0.0
+    private let queue = DispatchQueue(label: "com.bankaccount.queue")
 
     func deposit(amount: Double) {
-        balance += amount
+        queue.sync {
+            balance += amount
+        }
     }
 
     func getBalance() -> Double {
-        return balance
+        queue.sync {
+            balance
+        }
     }
 }
-
 let account = BankAccount()
 account.deposit(amount: 1000)
 print("Current Balance: ₹\(account.getBalance())")
