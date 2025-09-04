@@ -276,9 +276,6 @@ Paid ₹750.0 using UPI
 - **Abstraction** is like using a **remote control** — you press buttons without knowing the internal electronics.
 - **Encapsulation** is like the **plastic casing** around the remote — it protects the internal parts from being tampered with.
 
-
-Great choice, Janesh! Here's a blog-ready section on **Method Overloading in Swift**, using a **Calculator App** as a real-world example:
-
 ---
 
 ## 🧮 6. Method Overloading in Swift: 
