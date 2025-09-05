@@ -606,11 +606,12 @@ class AbstractShape {
 
 ---
 
+### 💡 Explanation:
+- The `PaymentMethod` protocol defines the **abstract behavior**.
+- Concrete classes (`UPIPayment`, `CreditCardPayment`) implement the behavior in their own way.
+- The caller (`makePayment`) doesn’t need to know how the payment is processed — it just uses the abstract interface.
 
-
-
-
-
+---
 
 
 ## 🧩 Summary of OOP Concepts
@@ -622,14 +623,6 @@ class AbstractShape {
 | **🧬📱 Inheritance**       | Reusing and extending functionality from a parent class                  | `class`, `super`, `override`         | `Dog` inherits from `Animal`, `UIViewController` |
 | **🔄💳 Polymorphism**      | One interface, many implementations                                      | `override`, `protocol`, dynamic dispatch | `Shape` drawing, `PaymentMethod` handling    |
 | **🧠💡 Abstraction**       | Hiding complexity behind a simplified interface                          | `protocol`                             | `PaymentMethod` protocol with multiple types |
-
----
-
-
-### 💡 Explanation:
-- The `PaymentMethod` protocol defines the **abstract behavior**.
-- Concrete classes (`UPIPayment`, `CreditCardPayment`) implement the behavior in their own way.
-- The caller (`makePayment`) doesn’t need to know how the payment is processed — it just uses the abstract interface.
 
 ---
 
