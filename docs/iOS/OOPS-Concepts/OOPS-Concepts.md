@@ -558,7 +558,14 @@ class AbstractShape {
             fatalError("AbstractShape cannot be instantiated directly")
         }
     }
-
+// Or
+/*
+    // Make initializer unavailable to prevent direct instantiation
+    @available(*, unavailable, message: "AbstractShape is abstract, use subclasses")
+    init() {
+        fatalError("AbstractShape cannot be instantiated directly")
+    }
+*/
     func area() -> Double {
         fatalError("Subclasses must override area()")
     }
