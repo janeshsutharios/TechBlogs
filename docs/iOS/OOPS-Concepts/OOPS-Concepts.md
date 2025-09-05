@@ -553,6 +553,12 @@ You can create a base class that includes methods meant to be overridden. If the
 
 ```swift
 class AbstractShape {
+    init() {
+        if type(of: self) == AbstractShape.self {
+            fatalError("AbstractShape cannot be instantiated directly")
+        }
+    }
+
     func area() -> Double {
         fatalError("Subclasses must override area()")
     }
@@ -578,22 +584,6 @@ class Circle: AbstractShape {
 ### 🚫 Prevent Instantiation (Optional)
 
 You can make the initializer `private` or `internal` to discourage direct instantiation:
-
-```swift
-class AbstractShape {
-    init() {
-        if type(of: self) == AbstractShape.self {
-            fatalError("AbstractShape cannot be instantiated directly")
-        }
-    }
-
-    func area() -> Double {
-        fatalError("Subclasses must override area()")
-    }
-}
-```
-
----
 
 ## 🧠 Summary
 
