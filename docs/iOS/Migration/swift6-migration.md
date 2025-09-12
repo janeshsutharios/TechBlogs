@@ -1,14 +1,3 @@
-* Extended explanations of *why* each Swift 6 feature matters.
-* Richer **before/after code samples** (with comments).
-* A **step-by-step migration workflow** with environment setup.
-* A **Before/After Migration Checklist** table.
-* A **“Troubleshooting & FAQs” section** (e.g., "Why did my closure stop compiling?").
-* A **Conclusion with recommended resources**.
-
-Here’s the extended version 👇
-
----
-
 # Migrating to Swift 6: The Definitive Handbook for iOS Developers
 
 Swift 6 marks a turning point in the evolution of Apple’s language. It brings stricter concurrency rules, typed error handling, new ownership models, and refined import controls — all designed to make your code safer, faster, and more maintainable.
