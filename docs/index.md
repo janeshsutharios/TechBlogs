@@ -7,4 +7,7 @@ Welcome! Browse my articles:
 - [⛩️ POP with Swift](https://janeshsutharios.github.io/TechBlogs/iOS/OOPS-Concepts/POP-Conccepts)
 - [💪🏻 SOLID with Swift](https://janeshsutharios.github.io/TechBlogs/iOS/SOLID-Swift)
 - [💾 Memory Management](https://janeshsutharios.github.io/TechBlogs/iOS/MemoryManagement/MemoryManagement)
+- [🔁 Swift 6 Migration](https://janeshsutharios.github.io/TechBlogs/iOS/Migration/swift6-migration)
+
+
 
