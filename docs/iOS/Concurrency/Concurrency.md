@@ -1,3 +1,4 @@
+# 🧵 Swift Concurrency:
 `withCheckedContinuation` is *not* just “an `@escaping` closure but with `async/await`.” It’s a **bridge** from callback-style APIs to Swift’s structured concurrency with important semantics that plain `@escaping` closures don’t have.
 
 Comparison between them 
