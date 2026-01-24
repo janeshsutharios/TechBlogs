@@ -8,4 +8,4 @@ Welcome! Browse my articles:
 - [💪🏻 SOLID with Swift](https://janeshsutharios.github.io/TechBlogs/iOS/SOLID-Swift)
 - [💾 Memory Management](https://janeshsutharios.github.io/TechBlogs/iOS/MemoryManagement/MemoryManagement)
 - [🔁 Swift 6 Migration](https://janeshsutharios.github.io/TechBlogs/iOS/Migration/swift6-migration)
-- [🔁 Swift Concurrency](https://janeshsutharios.github.io/TechBlogs/iOS/Concurrency/Concurrency.md)
+- [🧵 Swift Concurrency: Swift Concurrency](https://janeshsutharios.github.io/TechBlogs/iOS/Concurrency/Concurrency)
