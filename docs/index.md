@@ -9,3 +9,4 @@ Welcome! Browse my articles:
 - [💾 Memory Management](https://janeshsutharios.github.io/TechBlogs/iOS/MemoryManagement/MemoryManagement)
 - [🔁 Swift 6 Migration](https://janeshsutharios.github.io/TechBlogs/iOS/Migration/swift6-migration)
 - [🧵 Swift Concurrency](https://janeshsutharios.github.io/TechBlogs/iOS/Concurrency/Concurrency)
+- [🧵 Class/Actor/Struct](https://janeshsutharios.github.io/TechBlogs/iOS/Concurrency/ClassActorStruct)
